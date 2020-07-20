@@ -1,7 +1,7 @@
 import isAuthorized from '../../authorization/isAuthorized';
-import authorizedNavItems from './authorizedNavItems';
-import unauthorizedNavItems from './unauthorizedNavItems';
+import getAuthorizedNavItems from './getAuthorizedNavItems';
+import getUnauthorizedNavItems from './getUnauthorizedNavItems';
 
-const getNavItems = () => isAuthorized() ? authorizedNavItems : unauthorizedNavItems;
+const getNavItems = () => isAuthorized() ? getAuthorizedNavItems() : getUnauthorizedNavItems();
 
 export default getNavItems;
