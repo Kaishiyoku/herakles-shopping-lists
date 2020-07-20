@@ -1,7 +1,6 @@
 import {createHistory, createMemorySource} from '@reach/router';
 
-const source = createMemorySource('/');
-const history = createHistory(source);
+const history = createHistory(window);
 const {navigate} = history;
 
 export {

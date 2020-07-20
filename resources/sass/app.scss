@@ -16,3 +16,10 @@ $rmd-utils-large-desktop-min-width: 120em;
     height: 15px;
     margin: 0 10px 0 0;
 }
+
+@for $i from 0 through 24 {
+    .elevation-#{$i} {
+        @include rmd-elevation($i);
+        @include rmd-theme-dark-elevation($i, true);
+    }
+}

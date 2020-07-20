@@ -1,8 +1,11 @@
 import React from 'react';
 import get from '../../request/get';
 import merge from '../../core/merge';
-import trans from '../../i18n/trans';
 import {slugify} from 'transliteration';
+import {List, ListItem} from "@react-md/list";
+import DefaultGrid from '../core/DefaultGrid';
+import {Link} from '@reach/router';
+import {navigate} from '../../core/routerHistory';
 
 class ShoppingListsPage extends React.PureComponent {
     state = {
@@ -17,11 +20,21 @@ class ShoppingListsPage extends React.PureComponent {
         });
     }
 
+    handleShoppingListItemClick = (id) => {
+        this.props.navigate(`/shopping_lists/${id}`);
+    };
+
     render() {
         return (
-            <ul>
-                {this.state.shoppingLists.map((shoppingList) => <li key={slugify(shoppingList.name)}>{shoppingList.name}</li>)}
-            </ul>
+            <DefaultGrid>
+                <List className="elevation-1">
+                    {this.state.shoppingLists.map((shoppingList) => (
+                        <ListItem key={slugify(shoppingList.name)} onClick={() => this.handleShoppingListItemClick(shoppingList.id)}>
+                            {shoppingList.name}
+                        </ListItem>
+                    ))}
+                </List>
+            </DefaultGrid>
         );
     }
 }

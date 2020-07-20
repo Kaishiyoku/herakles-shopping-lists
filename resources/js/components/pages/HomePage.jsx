@@ -1,19 +1,15 @@
 import React from 'react';
 import isAuthorized from '../../authorization/isAuthorized';
-import LoginPage from './LoginPage';
-import ShoppingListsPage from './ShoppingListsPage';
 
 class HomePage extends React.PureComponent {
-    renderHomePage() {
-        return <ShoppingListsPage/>;
-    }
+    componentDidMount() {
+        const uri = isAuthorized() ? '/shopping_lists' : '/login';
 
-    renderLoginPage() {
-        return <LoginPage/>;
+        this.props.navigate(uri);
     }
 
     render() {
-        return isAuthorized() ? this.renderHomePage() : this.renderLoginPage();
+        return <></>;
     }
 }
 

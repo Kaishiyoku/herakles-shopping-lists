@@ -14,13 +14,7 @@ class ShoppingListController extends Controller
      */
     public function index()
     {
-        $shoppingLists = auth('api')->user()->shoppingLists->map(function ($shoppingList) {
-            if ($shoppingList->name === env('DEFAULT_SHOPPING_LIST_NAME')) {
-                $shoppingList->name = trans('shopping_list.default');
-            }
-
-            return $shoppingList;
-        });
+        $shoppingLists = auth('api')->user()->shoppingLists->map('formatDefaultShoppingListName');
 
         return response()->json($shoppingLists);
     }
@@ -49,21 +43,23 @@ class ShoppingListController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ShoppingList  $gender
+     * @param  \App\Models\ShoppingList  $shoppingList
      * @return \Illuminate\Http\Response
      */
-    public function show(ShoppingList $gender)
+    public function show(ShoppingList $shoppingList)
     {
-        //
+        $this->authorize('view', $shoppingList);
+
+        return response()->json(formatDefaultShoppingListName($shoppingList));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ShoppingList  $gender
+     * @param  \App\Models\ShoppingList  $shoppingList
      * @return \Illuminate\Http\Response
      */
-    public function edit(ShoppingList $gender)
+    public function edit(ShoppingList $shoppingList)
     {
         //
     }
@@ -72,10 +68,10 @@ class ShoppingListController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ShoppingList  $gender
+     * @param  \App\Models\ShoppingList  $shoppingList
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ShoppingList $gender)
+    public function update(Request $request, ShoppingList $shoppingList)
     {
         //
     }
@@ -83,10 +79,10 @@ class ShoppingListController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ShoppingList  $gender
+     * @param  \App\Models\ShoppingList  $shoppingList
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ShoppingList $gender)
+    public function destroy(ShoppingList $shoppingList)
     {
         //
     }

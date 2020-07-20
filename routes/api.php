@@ -24,4 +24,8 @@ Route::prefix('v1')->group(function () {
 
         Route::resource('shopping_lists', 'Api\V1\ShoppingListController');
     });
+
+    Route::any('{all}', function () {
+        return response()->json(null, 404);
+    })->where('all', '^.*$');
 });
