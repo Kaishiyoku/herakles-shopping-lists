@@ -24,6 +24,7 @@ const translations = {
     },
     shoppingLists: {
         create: {
+            shareWithUsers: 'Share list with other users',
             success: 'Shopping list created.',
             title: 'Add new shopping list',
         },

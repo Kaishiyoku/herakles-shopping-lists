@@ -22,6 +22,11 @@ Route::prefix('v1')->group(function () {
             return $request->user();
         });
 
+        Route::get('/users', function () {
+            $users = \App\Models\User::where('id', '!=', auth('api')->user()->id)->get()->map->only(['id', 'name']);
+
+            return response()->json($users);
+        });
         Route::resource('shopping_lists', 'Api\V1\ShoppingListController');
     });
 

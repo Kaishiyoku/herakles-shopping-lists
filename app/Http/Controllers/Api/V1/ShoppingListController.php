@@ -39,6 +39,7 @@ class ShoppingListController extends Controller
     {
         $rules = [
             'name' => ['required'],
+            'user_ids.*' => ['sometimes', 'exists:users,id'],
         ];
 
         $data = $request->validate($rules);
@@ -46,6 +47,10 @@ class ShoppingListController extends Controller
         $shoppingList = new ShoppingList($data);
 
         auth('api')->user()->shoppingLists()->save($shoppingList);
+
+        if (isset($data['user_ids'])) {
+            $shoppingList->users()->attach($data['user_ids']);
+        }
 
         return response()->json();
     }

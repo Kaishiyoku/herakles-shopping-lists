@@ -1,0 +1,4 @@
+### List all other users
+GET {{host}}/api/v1/users
+Accept: application/json
+Authorization: Bearer {{token}}
