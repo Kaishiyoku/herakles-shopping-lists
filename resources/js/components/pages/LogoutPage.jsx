@@ -14,7 +14,7 @@ class LogoutPage extends React.PureComponent {
 
         addToastMessage(trans('logout.success'));
 
-        navigate('/');
+        this.props.navigate('/');
     }
 
     render() {

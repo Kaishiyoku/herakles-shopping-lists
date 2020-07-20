@@ -1,20 +1,37 @@
 import React from 'react';
-import {createHistory, LocationProvider} from '@reach/router';
+import {LocationProvider} from '@reach/router';
 import {Configuration} from '@react-md/layout';
 import MainLayout from './MainLayout';
 import {MessageQueue} from '@react-md/alert';
 import {history} from '../../core/routerHistory';
+import getNavItems from '../../core/navigation/getNavItems';
 
-const App = () => {
-    return (
-        <LocationProvider history={history}>
-            <Configuration>
-                <MessageQueue id="main-alerts">
-                    <MainLayout/>
-                </MessageQueue>
-            </Configuration>
-        </LocationProvider>
-    );
-};
+class App extends React.Component {
+    state = {
+        currentPathname: null,
+    };
+
+    componentDidMount() {
+        history.listen(({location}) => {
+            this.setState({currentPathname: location.pathname});
+        });
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return this.state.currentPathname !== nextState.currentPathname;
+    }
+
+    render() {
+        return (
+            <LocationProvider history={history}>
+                <Configuration>
+                    <MessageQueue id="main-alerts">
+                        <MainLayout navItems={getNavItems()}/>
+                    </MessageQueue>
+                </Configuration>
+            </LocationProvider>
+        );
+    }
+}
 
 export default App;

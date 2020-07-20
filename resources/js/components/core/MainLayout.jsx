@@ -10,11 +10,10 @@ import {useAddMessage} from '@react-md/alert';
 import useObservable from './useObservable';
 import toast$ from '../../rx/toast$';
 import ErrorDialog from './ErrorDialog';
-import getNavItems from '../../core/navigation/getNavItems';
 import LogoutPage from '../pages/LogoutPage';
-import isAuthorized from '../../authorization/isAuthorized';
+import PropTypes from 'prop-types';
 
-const MainLayout = () => {
+const MainLayout = ({navItems}) => {
     const addMessage = useAddMessage();
     const {pathname} = useLocation();
     const [_rendered, transitionProps, dispatch] = useCrossFade();
@@ -34,7 +33,7 @@ const MainLayout = () => {
             <Layout
                 title={config.appTitle}
                 navHeaderTitle={config.navTitle}
-                treeProps={useLayoutNavigation(getNavItems(), pathname, Link)}
+                treeProps={useLayoutNavigation(navItems, pathname, Link)}
                 mainProps={transitionProps}
             >
                 <Router>
@@ -46,6 +45,10 @@ const MainLayout = () => {
             </Layout>
         </>
     );
+};
+
+MainLayout.propTypes = {
+    navItems: PropTypes.object.isRequired,
 };
 
 export default MainLayout;

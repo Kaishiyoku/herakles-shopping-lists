@@ -1,5 +1,4 @@
 import React from 'react';
-import DefaultGrid from '../core/DefaultGrid';
 import merge from '../../core/merge';
 import setApiToken from '../../authorization/setApiToken';
 import addToastMessage from '../../core/addToastMessage';
@@ -37,7 +36,7 @@ class LoginPage extends React.PureComponent {
 
             addToastMessage(trans('login.success'));
 
-            navigate('/');
+            this.props.navigate('/');
         }).catch((error) => {
             alert$.next(error.toString());
         }).finally(() => {
