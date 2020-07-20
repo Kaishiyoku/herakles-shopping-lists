@@ -1,0 +1,14 @@
+.form-1-2-2-2 {
+    @include rmd-grid(
+        $phone-columns: 1,
+        $tablet-columns: 2,
+        $desktop-columns: 2,
+        $large-desktop-columns: 2
+    );
+
+    button {
+        &[type="submit"] {
+            width: fit-content;
+        }
+    }
+}

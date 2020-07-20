@@ -8,7 +8,7 @@ import Formsy from 'formsy-react';
 import TextInput from '../form/TextInput';
 import ProgressSubmitButton from '../form/ProgressSubmitButton';
 import post from '../../request/post';
-import {navigate} from '../../core/routerHistory';
+import DefaultGrid from '../core/DefaultGrid';
 
 class LoginPage extends React.PureComponent {
     state = {
@@ -48,33 +48,37 @@ class LoginPage extends React.PureComponent {
 
     render() {
         return (
-            <Formsy
-                onValidSubmit={this.handleSubmit}
-                onValid={this.enableSubmitButton}
-                onInvalid={this.disableSubmitButton}
-                className="form-1-1-1-1"
-            >
-                <h1>{trans('login.title')}</h1>
+            <>
+                <DefaultGrid>
+                    <h1>{trans('login.title')}</h1>
+                </DefaultGrid>
 
-                <TextInput
-                    label={trans('validation.attributes.email')}
-                    name="email"
-                    validations="isEmail"
-                    validationError="This is not a valid email"
-                    required
-                />
+                <Formsy
+                    onValidSubmit={this.handleSubmit}
+                    onValid={this.enableSubmitButton}
+                    onInvalid={this.disableSubmitButton}
+                    className="form-1-2-2-2"
+                >
+                    <TextInput
+                        label={trans('validation.attributes.email')}
+                        name="email"
+                        validations="isEmail"
+                        validationError="This is not a valid email"
+                        required
+                    />
 
-                <TextInput
-                    label={trans('validation.attributes.password')}
-                    type="password"
-                    name="password"
-                    required
-                />
+                    <TextInput
+                        label={trans('validation.attributes.password')}
+                        type="password"
+                        name="password"
+                        required
+                    />
 
-                <ProgressSubmitButton disabled={!this.state.canSubmit} isLoading={this.state.isLoading}>
-                    {trans('login.title')}
-                </ProgressSubmitButton>
-            </Formsy>
+                    <ProgressSubmitButton disabled={!this.state.canSubmit} isLoading={this.state.isLoading}>
+                        {trans('login.title')}
+                    </ProgressSubmitButton>
+                </Formsy>
+            </>
         );
     }
 }

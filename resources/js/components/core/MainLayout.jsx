@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import ShoppingListsPage from '../pages/ShoppingListsPage';
 import ShoppingListDetailPage from '../pages/ShoppingListDetailPage';
 import HomePage from '../pages/HomePage';
+import ShoppingListCreatePage from '../pages/ShoppingListCreatePage';
 
 const PlaceholderComponent = ({children}) => children;
 
@@ -43,6 +44,7 @@ const MainLayout = ({navItems}) => {
                 <Router>
                     <PlaceholderComponent path="/">
                         <ShoppingListsPage path="/"/>
+                        <ShoppingListCreatePage path="/shopping_lists/create"/>
                         <ShoppingListDetailPage path="/shopping_lists/:id"/>
                     </PlaceholderComponent>
 

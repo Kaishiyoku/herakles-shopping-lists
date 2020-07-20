@@ -26,7 +26,7 @@ class ShoppingListController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -37,7 +37,17 @@ class ShoppingListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => ['required'],
+        ];
+
+        $data = $request->validate($rules);
+
+        $shoppingList = new ShoppingList($data);
+
+        auth('api')->user()->shoppingLists()->save($shoppingList);
+
+        return response()->json();
     }
 
     /**

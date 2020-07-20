@@ -23,11 +23,16 @@ const translations = {
         title: 'Page not found',
     },
     shoppingLists: {
+        create: {
+            success: 'Shopping list created.',
+            title: 'Add new shopping list',
+        },
         default: 'Default list',
     },
     validation: {
         attributes: {
             email: 'Email',
+            name: 'Name',
             password: 'Password',
         },
     },

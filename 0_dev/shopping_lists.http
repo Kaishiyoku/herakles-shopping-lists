@@ -7,3 +7,13 @@ Authorization: Bearer {{token}}
 GET {{host}}/api/v1/shopping_lists/1
 Accept: application/json
 Authorization: Bearer {{token}}
+
+### Add item
+POST {{host}}/api/v1/shopping_lists
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "Test 1"
+}
