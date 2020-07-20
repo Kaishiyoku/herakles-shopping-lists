@@ -7,7 +7,8 @@
         <title>{{ env('APP_NAME', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500:700&display=swap"/>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>

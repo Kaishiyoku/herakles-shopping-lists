@@ -1,12 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
+import App from './components/core/App';
 
 const rootEl = document.getElementById('root');
-
-const App = () => (
-    <div>
-        TODO
-    </div>
-);
 
 render(<App/>, rootEl);
