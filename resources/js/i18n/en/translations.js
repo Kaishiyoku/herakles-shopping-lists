@@ -14,7 +14,7 @@ const translations = {
         success: 'Logout successful.',
     },
     nav: {
-        home: 'Home',
+        home: 'Shopping lists',
         login: 'Login',
         logout: 'Logout',
     },
