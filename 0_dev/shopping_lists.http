@@ -1,0 +1,9 @@
+### List all
+GET {{host}}/api/v1/shopping_lists
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### Show item
+GET {{host}}/api/v1/shopping_lists/1
+Accept: application/json
+Authorization: Bearer {{token}}
