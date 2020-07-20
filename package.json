@@ -25,6 +25,7 @@
         "eslint-plugin-no-switch-statements": "^1.0.0",
         "eslint-plugin-no-unsafe-chars": "^1.0.2",
         "formsy-react": "^2.0.3",
+        "is-plain-object": "^3.0.1",
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.13",
         "node-polyglot": "^2.4.0",
@@ -39,6 +40,7 @@
         "resolve-url-loader": "^3.1.0",
         "rxjs": "^6.6.0",
         "sass": "^1.15.2",
-        "sass-loader": "^8.0.0"
+        "sass-loader": "^8.0.0",
+        "somereactcomponents": "^0.1.3"
     }
 }

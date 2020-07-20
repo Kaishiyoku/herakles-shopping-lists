@@ -1,3 +1,18 @@
 @import "~react-md/dist/react-md";
-
 @include react-md-utils;
+
+$rmd-utils-desktop-min-width: 92em;
+$rmd-utils-large-desktop-min-width: 120em;
+
+@import 'forms/form-1-1-1-1';
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.loading-button-progress {
+    width: 15px;
+    height: 15px;
+    margin: 0 10px 0 0;
+}

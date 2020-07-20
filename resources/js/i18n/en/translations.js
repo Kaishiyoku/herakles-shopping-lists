@@ -11,7 +11,7 @@ const translations = {
         title: 'Login',
     },
     logout: {
-        success: 'Logged out.',
+        success: 'Logout successful.',
     },
     nav: {
         home: 'Home',
