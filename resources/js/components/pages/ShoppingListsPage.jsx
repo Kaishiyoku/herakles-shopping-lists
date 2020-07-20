@@ -17,18 +17,10 @@ class ShoppingListsPage extends React.PureComponent {
         });
     }
 
-    formatShoppingListName(name) {
-        if (name === '[default]') {
-            return trans('shoppingLists.default')
-        }
-
-        return name;
-    }
-
     render() {
         return (
             <ul>
-                {this.state.shoppingLists.map((shoppingList) => <li key={slugify(shoppingList.name)}>{this.formatShoppingListName(shoppingList.name)}</li>)}
+                {this.state.shoppingLists.map((shoppingList) => <li key={slugify(shoppingList.name)}>{shoppingList.name}</li>)}
             </ul>
         );
     }

@@ -14,9 +14,15 @@ class ShoppingListController extends Controller
      */
     public function index()
     {
-        $genders = auth('api')->user()->shoppingLists;
+        $shoppingLists = auth('api')->user()->shoppingLists->map(function ($shoppingList) {
+            if ($shoppingList->name === env('DEFAULT_SHOPPING_LIST_NAME')) {
+                $shoppingList->name = trans('shopping_list.default');
+            }
 
-        return response()->json($genders);
+            return $shoppingList;
+        });
+
+        return response()->json($shoppingLists);
     }
 
     /**
