@@ -1,0 +1,5 @@
+const LOCAL_STORAGE_FIELD_API_TOKEN = 'apiToken';
+
+export {
+    LOCAL_STORAGE_FIELD_API_TOKEN,
+};
