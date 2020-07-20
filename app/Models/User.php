@@ -33,6 +33,8 @@ use Illuminate\Notifications\Notifiable;
  * @mixin \Eloquent
  * @property string|null $api_token
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereApiToken($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ShoppingList[] $shoppingLists
+ * @property-read int|null $shopping_lists_count
  */
 class User extends Authenticatable
 {
@@ -64,4 +66,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function shoppingLists()
+    {
+        return $this->belongsToMany(ShoppingList::class);
+    }
 }

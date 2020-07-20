@@ -22,6 +22,9 @@ const translations = {
         description: 'Die von Ihnen aufgerufene Seite konnte nicht gefunden werden.',
         title: 'Seite nicht gefunden',
     },
+    shoppingLists: {
+        default: 'Standardliste',
+    },
     validation: {
         attributes: {
             email: 'E-Mail',

@@ -17,7 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::post('/login', 'Api\V1\Auth\LoginController@login')->name('login');
 
-    Route::middleware('auth:api')->get('/user', function (Request $request) {
-        return $request->user();
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
+
+        Route::resource('shopping_lists', 'Api\V1\ShoppingListController');
     });
 });

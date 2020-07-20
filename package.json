@@ -41,6 +41,7 @@
         "rxjs": "^6.6.0",
         "sass": "^1.15.2",
         "sass-loader": "^8.0.0",
-        "somereactcomponents": "^0.1.3"
+        "somereactcomponents": "^0.1.3",
+        "transliteration": "^2.1.11"
     }
 }

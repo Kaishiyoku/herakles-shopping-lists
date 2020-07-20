@@ -32,8 +32,11 @@ return [
 
     'post_creation_fn' => function ($user) {
         $user->api_token = \Ramsey\Uuid\Uuid::uuid4()->toString();
-
         $user->save();
+
+        $defaultShoppingList = new \App\Models\ShoppingList();
+        $defaultShoppingList->name = '[default]';
+        $user->shoppingLists()->save($defaultShoppingList);
 
         return $user;
     },

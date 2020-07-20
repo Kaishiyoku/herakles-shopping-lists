@@ -22,6 +22,9 @@ const translations = {
         description: 'The page you requested does not exit.',
         title: 'Page not found',
     },
+    shoppingLists: {
+        default: 'Default list',
+    },
     validation: {
         attributes: {
             email: 'Email',

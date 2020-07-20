@@ -1,15 +1,11 @@
 import React from 'react';
-import DefaultGrid from '../core/DefaultGrid';
 import isAuthorized from '../../authorization/isAuthorized';
 import LoginPage from './LoginPage';
+import ShoppingListsPage from './ShoppingListsPage';
 
 class HomePage extends React.PureComponent {
     renderHomePage() {
-        return (
-            <DefaultGrid>
-                Home
-            </DefaultGrid>
-        );
+        return <ShoppingListsPage/>;
     }
 
     renderLoginPage() {
