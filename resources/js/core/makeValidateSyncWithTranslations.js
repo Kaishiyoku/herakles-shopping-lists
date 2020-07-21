@@ -9,11 +9,11 @@ function makeValidateSyncWithTranslations(schema) {
         const options = {field: trans(`validation.attributes.${path}`)};
 
         return (
-            <span className='error' key={Math.random()}>
+            <span className="error" key={Math.random()}>
                 {trans(`validation.errors.${type}`, options)}
             </span>
         );
-    })
+    });
 }
 
 export default makeValidateSyncWithTranslations;

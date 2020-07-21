@@ -20,8 +20,8 @@ class ShoppingListsPage extends React.PureComponent {
     componentDidMount() {
         get('/shopping_lists').then((response) => {
             this.setState((prevState, props) => {
-                return merge(prevState, {shoppingLists: response.data, isLoading: false});
-            })
+                return merge(prevState, {isLoading: false, shoppingLists: response.data});
+            });
         });
     }
 

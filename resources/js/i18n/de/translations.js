@@ -39,8 +39,8 @@ const translations = {
             password: 'Passwort',
         },
         errors: {
-            required: '%{field} ist ein Pflichtfeld.',
             email: '%{field} muss eine gültige E-Mail-Adresse sein.',
+            required: '%{field} ist ein Pflichtfeld.',
         },
     },
 };

@@ -25,7 +25,7 @@ class ShoppingListCreatePage extends React.PureComponent {
     componentDidMount() {
         get('/users').then(({data}) => {
             this.setState((prevState, props) => {
-                return merge(prevState, {users: data, isLoading: false});
+                return merge(prevState, {isLoading: false, users: data});
             });
         });
     }
@@ -85,9 +85,9 @@ class ShoppingListCreatePage extends React.PureComponent {
 
                             <Grid item>
                                 {
-                                    this.state.isLoading ?
-                                        range(0, 5).map((i) => <Skeleton key={i} animation="wave" width="30%"/>) :
-                                        <Checkboxes
+                                    this.state.isLoading
+                                        ? range(0, 5).map((i) => <Skeleton key={i} animation="wave" width="30%"/>)
+                                        : <Checkboxes
                                             label={trans('shoppingLists.create.shareWithUsers')}
                                             name="user_ids"
                                             data={this.getShareWithUsersCheckboxData()}

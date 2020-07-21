@@ -2,8 +2,8 @@ import englishTranslations from './en/translations';
 import germanTranslations from './de/translations';
 
 const allTranslations = {
-    en: englishTranslations,
     de: germanTranslations,
+    en: englishTranslations,
 };
 
 export default allTranslations;

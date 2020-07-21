@@ -12,7 +12,8 @@ import MainTheme from './MainTheme';
 const PlaceholderComponent = ({children}) => children;
 
 const MainLayout = ({navItems}) => {
-    /*const addMessage = useAddMessage();
+    /*
+    const addMessage = useAddMessage();
     const {pathname} = useLocation();
     const [_rendered, transitionProps, dispatch] = useCrossFade();
     const prevPathname = useRef(pathname);
@@ -22,7 +23,8 @@ const MainLayout = ({navItems}) => {
     if (pathname !== prevPathname.current) {
         prevPathname.current = pathname;
         dispatch(ENTER);
-    }*/
+    }
+    */
 
     return (
         <MainTheme>
@@ -41,6 +43,7 @@ const MainLayout = ({navItems}) => {
     );
 };
 
+// eslint-disable-next-line fp/no-mutation
 MainLayout.propTypes = {
     navItems: PropTypes.object.isRequired,
 };

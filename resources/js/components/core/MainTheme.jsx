@@ -15,6 +15,7 @@ import {SnackbarProvider} from 'notistack';
 
 const drawerWidth = 240;
 
+/* eslint-disable sort-keys */
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -37,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
             display: 'none',
         },
     },
-    // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
         width: drawerWidth,
@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(3),
     },
 }));
+/* eslint-enable sort-keys */
 
 function MainTheme(props) {
     const {window, children} = props;
@@ -66,6 +67,7 @@ function MainTheme(props) {
         </div>
     );
 
+    // eslint-disable-next-line no-undefined
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
@@ -75,8 +77,8 @@ function MainTheme(props) {
             <SnackbarProvider
                 maxSnack={3}
                 anchorOrigin={{
-                    vertical: 'bottom',
                     horizontal: 'center',
+                    vertical: 'bottom',
                 }}
                 hideIconVariant
             >
