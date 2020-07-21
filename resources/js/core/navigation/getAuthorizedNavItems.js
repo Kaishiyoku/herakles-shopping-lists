@@ -1,14 +1,25 @@
-import merge from '../merge';
-import createNavItem from './createNavItem';
-import {ExitToAppSVGIcon, HomeSVGIcon} from '@react-md/material-icons';
 import React from 'react';
-import createDivider from './createDivider';
 import trans from '../../i18n/trans';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import HomeIcon from '@material-ui/icons/Home';
+import createNavItem from './createNavItem';
+import createDivider from './createDivider';
+import createNavItemList from './createNavItemList';
 
-const getAuthorizedNavItems = () => merge(
-    createNavItem('/', trans('nav.home'), <HomeSVGIcon/>),
-    createDivider('divider-1'),
-    createNavItem('/logout', trans('nav.logout'), <ExitToAppSVGIcon/>),
+const getAuthorizedNavItems = () => (
+    <>
+        {
+            [
+                createNavItemList('nav-1', [
+                    createNavItem('/', trans('nav.home'), <HomeIcon/>),
+                ]),
+                createDivider('divider-1'),
+                createNavItemList('nav-2', [
+                    createNavItem('/logout', trans('nav.logout'), <ExitToAppIcon/>),
+                ]),
+            ]
+        }
+    </>
 );
 
 export default getAuthorizedNavItems;

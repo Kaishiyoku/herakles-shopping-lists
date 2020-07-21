@@ -1,14 +1,15 @@
 import React from 'react';
 import merge from '../../core/merge';
 import setApiToken from '../../authorization/setApiToken';
-import addToastMessage from '../../core/addToastMessage';
 import trans from '../../i18n/trans';
-import alert$ from '../../rx/alert$';
-import Formsy from 'formsy-react';
-import TextInput from '../form/TextInput';
-import ProgressSubmitButton from '../form/ProgressSubmitButton';
 import post from '../../request/post';
-import DefaultGrid from '../core/DefaultGrid';
+import Button from '@material-ui/core/Button';
+import makeValidateSyncWithTranslations from '../../core/makeValidateSyncWithTranslations';
+import * as yup from 'yup';
+import {Form} from 'react-final-form';
+import Grid from '@material-ui/core/Grid';
+import {TextField} from 'mui-rff';
+import {withSnackbar} from 'notistack';
 
 class LoginPage extends React.PureComponent {
     state = {
@@ -34,11 +35,11 @@ class LoginPage extends React.PureComponent {
         post('/login', model).then((response) => {
             setApiToken(response.data.api_token);
 
-            addToastMessage(trans('login.success'));
+            this.props.enqueueSnackbar(trans('login.success'));
 
             this.props.navigate('/');
         }).catch((error) => {
-            alert$.next(error.toString());
+            this.props.enqueueSnackbar(trans('login.error'), {variant: 'error'});
         }).finally(() => {
             this.setState((prevState, props) => {
                 return merge(prevState, {isLoading: false});
@@ -46,41 +47,56 @@ class LoginPage extends React.PureComponent {
         });
     }
 
+    static formValidationSchema = yup.object().shape({
+        email: yup.string().email().required(),
+        password: yup.string().required(),
+    });
+
+    renderForm() {
+        const validate = makeValidateSyncWithTranslations(LoginPage.formValidationSchema);
+
+        return (
+            <Form
+                onSubmit={this.handleSubmit}
+                initialValues={{}}
+                validate={validate}
+                render={({handleSubmit, values, submitting, pristine, invalid}) => (
+                    <form onSubmit={handleSubmit} noValidate>
+                        <Grid container direction="column" alignContent="stretch" justify="space-between" spacing={4}>
+                            <Grid item>
+                                <TextField type="email" label={trans('validation.attributes.email')} name="email" required={true}/>
+                            </Grid>
+
+                            <Grid item>
+                                <TextField type="password" label={trans('validation.attributes.password')} name="password" required={true}/>
+                            </Grid>
+
+                            <Grid item>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    disabled={submitting || pristine || invalid || this.state.isLoading}
+                                >
+                                    {trans('login.title')}
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </form>
+                )}
+            />
+        );
+    }
+
     render() {
         return (
             <>
-                <DefaultGrid>
-                    <h1>{trans('login.title')}</h1>
-                </DefaultGrid>
+                <h1>{trans('login.title')}</h1>
 
-                <Formsy
-                    onValidSubmit={this.handleSubmit}
-                    onValid={this.enableSubmitButton}
-                    onInvalid={this.disableSubmitButton}
-                    className="form-1-2-2-2"
-                >
-                    <TextInput
-                        label={trans('validation.attributes.email')}
-                        name="email"
-                        validations="isEmail"
-                        validationError="This is not a valid email"
-                        required
-                    />
-
-                    <TextInput
-                        label={trans('validation.attributes.password')}
-                        type="password"
-                        name="password"
-                        required
-                    />
-
-                    <ProgressSubmitButton disabled={!this.state.canSubmit} isLoading={this.state.isLoading}>
-                        {trans('login.title')}
-                    </ProgressSubmitButton>
-                </Formsy>
+                {this.renderForm()}
             </>
         );
     }
 }
 
-export default LoginPage;
+export default withSnackbar(LoginPage);

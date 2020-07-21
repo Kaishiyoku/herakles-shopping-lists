@@ -7,6 +7,7 @@ const translations = {
     },
     login: {
         alreadyLoggedIn: 'Sie sind bereits eingeloggt.',
+        error: 'Login gescheitert.',
         success: 'Login erfolgreich.',
         title: 'Login',
     },
@@ -24,6 +25,7 @@ const translations = {
     },
     shoppingLists: {
         create: {
+            error: 'Einkaufsliste konnte nicht gespeichert werden.',
             shareWithUsers: 'Liste mit anderen Nutzern teilen',
             success: 'Einkaufsliste erstellt.',
             title: 'Neue Einkaufsliste erstellen',
@@ -35,6 +37,10 @@ const translations = {
             email: 'E-Mail',
             name: 'Name',
             password: 'Passwort',
+        },
+        errors: {
+            required: '%{field} ist ein Pflichtfeld.',
+            email: '%{field} muss eine gültige E-Mail-Adresse sein.',
         },
     },
 };

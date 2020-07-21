@@ -1,9 +1,7 @@
 import React from 'react';
 import {LocationProvider} from '@reach/router';
-import {Configuration} from '@react-md/layout';
-import MainLayout from './MainLayout';
-import {MessageQueue} from '@react-md/alert';
 import {history} from '../../core/routerHistory';
+import MainLayout from './MainLayout';
 import getNavItems from '../../core/navigation/getNavItems';
 
 class App extends React.Component {
@@ -22,13 +20,11 @@ class App extends React.Component {
     }
 
     render() {
+        const {classes} = this.props;
+
         return (
             <LocationProvider history={history}>
-                <Configuration>
-                    <MessageQueue id="main-alerts">
-                        <MainLayout navItems={getNavItems()}/>
-                    </MessageQueue>
-                </Configuration>
+                <MainLayout navItems={getNavItems()}/>
             </LocationProvider>
         );
     }

@@ -1,11 +1,19 @@
-import merge from '../merge';
 import createNavItem from './createNavItem';
-import {ExitToAppSVGIcon} from '@react-md/material-icons';
 import React from 'react';
 import trans from '../../i18n/trans';
+import createNavItemList from './createNavItemList';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-const getUnauthorizedNavItems = () => merge(
-    createNavItem('/login', trans('nav.login'), <ExitToAppSVGIcon/>),
+const getUnauthorizedNavItems = () => (
+    <>
+        {
+            [
+                createNavItemList('nav-1', [
+                    createNavItem('/login', trans('nav.login'), <ExitToAppIcon/>),
+                ]),
+            ]
+        }
+    </>
 );
 
 export default getUnauthorizedNavItems;

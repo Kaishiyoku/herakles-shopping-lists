@@ -1,8 +1,7 @@
 import React from 'react';
 import clearApiToken from '../../authorization/clearApiToken';
-import addToastMessage from '../../core/addToastMessage';
+import {withSnackbar} from 'notistack';
 import trans from '../../i18n/trans';
-import {navigate} from '../../core/routerHistory';
 
 class LogoutPage extends React.PureComponent {
     componentDidMount() {
@@ -12,7 +11,7 @@ class LogoutPage extends React.PureComponent {
     handleLogout() {
         clearApiToken();
 
-        addToastMessage(trans('logout.success'));
+        this.props.enqueueSnackbar(trans('logout.success'));
 
         this.props.navigate('/');
     }
@@ -22,4 +21,4 @@ class LogoutPage extends React.PureComponent {
     }
 }
 
-export default LogoutPage;
+export default withSnackbar(LogoutPage);

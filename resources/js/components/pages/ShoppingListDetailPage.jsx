@@ -1,27 +1,32 @@
 import React from 'react';
-import DefaultGrid from '../core/DefaultGrid';
 import get from '../../request/get';
 import merge from '../../core/merge';
-import {Text} from '@react-md/typography';
+import Typography from '@material-ui/core/Typography';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 class ShoppingListDetailPage extends React.PureComponent {
     state = {
+        isLoading: true,
         shoppingList: {},
     };
 
     componentDidMount() {
         get(`/shopping_lists/${this.props.id}`).then(({data}) => {
             this.setState((prevState, props) => {
-                return merge(prevState, {shoppingList: data});
+                return merge(prevState, {shoppingList: data, isLoading: false});
             });
         });
     }
 
     render() {
+        const {isLoading} = this.state;
+
         return (
-            <DefaultGrid>
-                <Text type="headline-3">{this.state.shoppingList.name}</Text>
-            </DefaultGrid>
+            <>
+                <Typography variant="h3" gutterBottom>
+                    {isLoading ? <Skeleton animation="wave" width="30%"/> : this.state.shoppingList.name}
+                </Typography>
+            </>
         );
     }
 }
