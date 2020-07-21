@@ -1,4 +1,9 @@
-@import "~react-md/dist/react-md";
+@import '~@react-md/theme/dist/color-palette';
+
+$rmd-theme-primary: $rmd-cyan-500;
+$rmd-theme-secondary: $rmd-pink-a-200;
+
+@import '~react-md/dist/react-md';
 @include react-md-utils;
 
 $rmd-utils-desktop-min-width: 92em;
