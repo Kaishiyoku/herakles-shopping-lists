@@ -62,13 +62,19 @@ function MainTheme(props) {
         setMobileOpen(!mobileOpen);
     };
 
-    const drawer = (
-        <div>
-            <div className={classes.toolbar}/>
-            <Divider/>
-            {getNavItems()}
-        </div>
-    );
+    const drawer = (closeOnClick = false) => {
+        const drawerProps = closeOnClick ? {onClick: handleDrawerToggle} : null;
+
+        return (
+            <div>
+                <div className={classes.toolbar}/>
+                <Divider/>
+                <div {...drawerProps}>
+                    {getNavItems()}
+                </div>
+            </div>
+        );
+    };
 
     // eslint-disable-next-line no-undefined
     const container = window !== undefined ? () => window().document.body : undefined;
@@ -116,7 +122,7 @@ function MainTheme(props) {
                                 keepMounted: true,
                             }}
                         >
-                            {drawer}
+                            {drawer(true)}
                         </Drawer>
                     </Hidden>
                     <Hidden smDown implementation="css">
@@ -127,7 +133,7 @@ function MainTheme(props) {
                             variant="permanent"
                             open
                         >
-                            {drawer}
+                            {drawer()}
                         </Drawer>
                     </Hidden>
                 </nav>
