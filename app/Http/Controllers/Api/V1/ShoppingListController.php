@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\ShoppingList;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ShoppingListController extends Controller
@@ -17,16 +18,6 @@ class ShoppingListController extends Controller
         $shoppingLists = auth('api')->user()->shoppingLists->map('formatDefaultShoppingListName');
 
         return response()->json($shoppingLists);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
     }
 
     /**
@@ -46,7 +37,7 @@ class ShoppingListController extends Controller
 
         $shoppingList = new ShoppingList($data);
 
-        auth('api')->user()->shoppingLists()->save($shoppingList);
+        auth('api')->user()->shoppingLists()->save($shoppingList, ['is_creator' => true]);
 
         if (isset($data['user_ids'])) {
             $shoppingList->users()->attach($data['user_ids']);
@@ -69,17 +60,6 @@ class ShoppingListController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ShoppingList  $shoppingList
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ShoppingList $shoppingList)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -99,6 +79,11 @@ class ShoppingListController extends Controller
      */
     public function destroy(ShoppingList $shoppingList)
     {
-        //
+        $this->authorize('delete', $shoppingList);
+
+        $shoppingList->users()->detach();
+        $shoppingList->delete();
+
+        return response()->json();
     }
 }

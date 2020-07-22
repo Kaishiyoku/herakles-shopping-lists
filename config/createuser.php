@@ -36,7 +36,7 @@ return [
 
         $defaultShoppingList = new \App\Models\ShoppingList();
         $defaultShoppingList->name = '[default]';
-        $user->shoppingLists()->save($defaultShoppingList);
+        $user->shoppingLists()->save($defaultShoppingList, ['is_creator' => true]);
 
         return $user;
     },

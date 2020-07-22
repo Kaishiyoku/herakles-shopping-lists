@@ -2,8 +2,13 @@ const translations = {
     common: {
         cancel: 'Abbrechen',
         close: 'Schließen',
+        confirm: 'Bestätigen',
         create: 'Erstellen',
         error: 'Fehler',
+    },
+    confirmationDialog: {
+        description: 'Bitte bestätigen Sie die Aktion.',
+        title: 'Sind Sie sicher?',
     },
     login: {
         alreadyLoggedIn: 'Sie sind bereits eingeloggt.',
@@ -34,6 +39,15 @@ const translations = {
             title: 'Neue Einkaufsliste erstellen',
         },
         default: 'Standardliste',
+        destroy: {
+            confirmation: {
+                description: 'Wollen Sie die Einkaufsliste „%{name}” wirklich löschen? Alle Einträge werden unwiderruflich gelöscht.',
+            },
+            success: 'Einlaufsliste „%{name}” gelöscht.',
+        },
+        details: {
+            deleteShoppingList: 'Einkaufsliste löschen',
+        },
     },
     validation: {
         attributes: {

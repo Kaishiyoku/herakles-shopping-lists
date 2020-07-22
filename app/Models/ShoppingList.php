@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Pivots\ShoppingListUser;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -35,6 +36,6 @@ class ShoppingList extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withPivot('is_creator')->using(ShoppingListUser::class);
     }
 }

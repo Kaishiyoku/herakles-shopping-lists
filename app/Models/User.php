@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Pivots\ShoppingListUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -69,6 +70,6 @@ class User extends Authenticatable
 
     public function shoppingLists()
     {
-        return $this->belongsToMany(ShoppingList::class);
+        return $this->belongsToMany(ShoppingList::class)->withPivot('is_creator')->using(ShoppingListUser::class);
     }
 }

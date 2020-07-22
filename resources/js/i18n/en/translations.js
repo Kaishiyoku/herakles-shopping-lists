@@ -2,8 +2,13 @@ const translations = {
     common: {
         cancel: 'Cancel',
         close: 'Close',
+        confirm: 'Confirm',
         create: 'Create',
         error: 'Error',
+    },
+    confirmationDialog: {
+        description: 'Please confirm this action.',
+        title: 'Are you sure?',
     },
     login: {
         alreadyLoggedIn: 'You are already logged in.',
@@ -31,6 +36,15 @@ const translations = {
             title: 'Add new shopping list',
         },
         default: 'Default list',
+        destroy: {
+            confirmation: {
+                description: 'Do you really want to delete the shopping list “%{name}”? All entries will be deleted permanently.',
+            },
+            success: 'Shopping list “%{name}” deleted.',
+        },
+        details: {
+            deleteShoppingList: 'Delete shopping list',
+        },
     },
     validation: {
         attributes: {

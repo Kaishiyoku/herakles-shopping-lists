@@ -10,6 +10,7 @@ const getAuthorizedRoutes = () => (
     <>
         <PlaceholderComponent path="/">
             <ShoppingListsPage path="/"/>
+            <ShoppingListsPage path="/shopping_lists"/>
             <ShoppingListCreatePage path="/shopping_lists/create"/>
             <ShoppingListDetailPage path="/shopping_lists/:id"/>
         </PlaceholderComponent>

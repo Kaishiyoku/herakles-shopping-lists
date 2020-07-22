@@ -69,7 +69,12 @@ class ShoppingListPolicy
      */
     public function delete(User $user, ShoppingList $shoppingList)
     {
-        //
+        $creator = $shoppingList->users
+            ->filter(function (User $shoppingListUser) {
+                return $shoppingListUser->pivot->is_creator;
+            })->first();
+
+        return $creator->id === $user->id;
     }
 
     /**
