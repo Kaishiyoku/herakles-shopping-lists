@@ -14,6 +14,13 @@ import makeValidateSyncWithTranslations from '../../core/makeValidateSyncWithTra
 import {withSnackbar} from 'notistack';
 import LoadingButton from '../core/LoadingButton';
 import {navigate} from '../../core/routerHistory';
+import Fade from '@material-ui/core/Fade';
+import Grow from '@material-ui/core/Grow';
+import Slide from '@material-ui/core/Slide';
+import Zoom from '@material-ui/core/Zoom';
+import withFade from '../core/withFade';
+
+const SampleComponent = (props) => <div {...props}>Fade</div>;
 
 class ShoppingListCreatePage extends React.PureComponent {
     state = {
@@ -128,4 +135,4 @@ class ShoppingListCreatePage extends React.PureComponent {
     }
 }
 
-export default withSnackbar(ShoppingListCreatePage);
+export default withSnackbar(withFade(ShoppingListCreatePage));

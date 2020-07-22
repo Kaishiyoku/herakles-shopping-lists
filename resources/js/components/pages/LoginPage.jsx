@@ -12,6 +12,7 @@ import {withSnackbar} from 'notistack';
 import LoadingButton from '../core/LoadingButton';
 import {redirectTo} from '@reach/router';
 import {navigate} from '../../core/routerHistory';
+import withFade from '../core/withFade';
 
 class LoginPage extends React.PureComponent {
     state = {
@@ -102,4 +103,4 @@ class LoginPage extends React.PureComponent {
     }
 }
 
-export default withSnackbar(LoginPage);
+export default withSnackbar(withFade(LoginPage));

@@ -3,6 +3,7 @@ import get from '../../request/get';
 import merge from '../../core/merge';
 import Typography from '@material-ui/core/Typography';
 import Skeleton from '@material-ui/lab/Skeleton';
+import withFade from '../core/withFade';
 
 class ShoppingListDetailPage extends React.PureComponent {
     state = {
@@ -31,4 +32,4 @@ class ShoppingListDetailPage extends React.PureComponent {
     }
 }
 
-export default ShoppingListDetailPage;
+export default withFade(ShoppingListDetailPage);

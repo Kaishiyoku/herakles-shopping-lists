@@ -1,4 +1,5 @@
 import React from 'react';
+import withFade from '../core/withFade';
 
 const NotFoundPage = () => {
     return (
@@ -6,4 +7,4 @@ const NotFoundPage = () => {
     );
 };
 
-export default NotFoundPage;
+export default withFade(NotFoundPage);

@@ -13,6 +13,7 @@ import {range} from 'ramda';
 import isAuthorized from '../../authorization/isAuthorized';
 import NotAuthorizedPage from './NotAuthorizedPage';
 import {navigate} from '../../core/routerHistory';
+import withFade from '../core/withFade';
 
 class ShoppingListsPage extends React.PureComponent {
     state = {
@@ -59,4 +60,4 @@ class ShoppingListsPage extends React.PureComponent {
     }
 }
 
-export default ShoppingListsPage;
+export default withFade(ShoppingListsPage);
