@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import Skeleton from '@material-ui/lab/Skeleton';
 import makeValidateSyncWithTranslations from '../../core/makeValidateSyncWithTranslations';
 import {withSnackbar} from 'notistack';
+import LoadingButton from '../core/LoadingButton';
 
 class ShoppingListCreatePage extends React.PureComponent {
     state = {
@@ -96,14 +97,15 @@ class ShoppingListCreatePage extends React.PureComponent {
                             </Grid>
 
                             <Grid item>
-                                <Button
+                                <LoadingButton
                                     type="submit"
                                     variant="contained"
                                     color="primary"
                                     disabled={submitting || pristine || invalid || this.state.isLoading}
+                                    isLoading={this.state.isLoading}
                                 >
                                     {trans('common.create')}
-                                </Button>
+                                </LoadingButton>
                             </Grid>
                         </Grid>
                     </form>

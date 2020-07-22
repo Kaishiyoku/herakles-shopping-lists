@@ -30,9 +30,9 @@ class ShoppingListsPage extends React.PureComponent {
             return range(0, 5).map((i) => <ListItem key={i} animation="wave"><Skeleton animation="wave" width="100%"/></ListItem>);
         }
 
-        return this.state.shoppingLists.map((shoppingList) => (
-            <ListItem button key={slugify(shoppingList.name)} component={Link} to={`/shopping_lists/${shoppingList.id}`}>
-                {shoppingList.name}
+        return this.state.shoppingLists.map(({name, id}) => (
+            <ListItem button key={slugify(`${name}-${id}`)} component={Link} to={`/shopping_lists/${id}`}>
+                {name}
             </ListItem>
         ));
     }

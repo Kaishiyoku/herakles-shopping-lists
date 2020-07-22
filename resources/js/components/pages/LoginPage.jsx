@@ -10,6 +10,7 @@ import {Form} from 'react-final-form';
 import Grid from '@material-ui/core/Grid';
 import {TextField} from 'mui-rff';
 import {withSnackbar} from 'notistack';
+import LoadingButton from '../core/LoadingButton';
 
 class LoginPage extends React.PureComponent {
     state = {
@@ -72,14 +73,15 @@ class LoginPage extends React.PureComponent {
                             </Grid>
 
                             <Grid item>
-                                <Button
+                                <LoadingButton
                                     type="submit"
                                     variant="contained"
                                     color="primary"
                                     disabled={submitting || pristine || invalid || this.state.isLoading}
+                                    isLoading={this.state.isLoading}
                                 >
                                     {trans('login.title')}
-                                </Button>
+                                </LoadingButton>
                             </Grid>
                         </Grid>
                     </form>
