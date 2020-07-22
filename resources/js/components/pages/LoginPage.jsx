@@ -10,7 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import {TextField} from 'mui-rff';
 import {withSnackbar} from 'notistack';
 import LoadingButton from '../core/LoadingButton';
-import {redirectTo} from '@reach/router';
 import {navigate} from '../../core/routerHistory';
 import withFade from '../core/withFade';
 

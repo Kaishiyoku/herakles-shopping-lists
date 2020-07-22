@@ -5,6 +5,7 @@
 /public/js
 /public/storage
 /public/mix-manifest.json
+/resources/js/tests/__coverage__
 /storage/*.key
 /vendor
 .env
