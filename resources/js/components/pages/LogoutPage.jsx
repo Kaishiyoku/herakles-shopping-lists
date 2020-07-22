@@ -2,6 +2,7 @@ import React from 'react';
 import clearApiToken from '../../authorization/clearApiToken';
 import {withSnackbar} from 'notistack';
 import trans from '../../i18n/trans';
+import {navigate} from '../../core/routerHistory';
 
 class LogoutPage extends React.PureComponent {
     componentDidMount() {
@@ -13,7 +14,7 @@ class LogoutPage extends React.PureComponent {
 
         this.props.enqueueSnackbar(trans('logout.success'));
 
-        this.props.navigate('/');
+        navigate('/');
     }
 
     render() {

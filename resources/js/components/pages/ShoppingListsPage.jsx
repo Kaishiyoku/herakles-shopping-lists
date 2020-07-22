@@ -10,6 +10,9 @@ import ListItem from '@material-ui/core/ListItem';
 import {Link} from '@reach/router';
 import Skeleton from '@material-ui/lab/Skeleton';
 import {range} from 'ramda';
+import isAuthorized from '../../authorization/isAuthorized';
+import NotAuthorizedPage from './NotAuthorizedPage';
+import {navigate} from '../../core/routerHistory';
 
 class ShoppingListsPage extends React.PureComponent {
     state = {
@@ -41,7 +44,7 @@ class ShoppingListsPage extends React.PureComponent {
         return (
             <>
                 <p>
-                    <Button variant="outlined" color="primary" onClick={() => this.props.navigate('/shopping_lists/create')}>
+                    <Button variant="outlined" color="primary" onClick={() => navigate('/shopping_lists/create')}>
                         {trans('shoppingLists.create.title')}
                     </Button>
                 </p>

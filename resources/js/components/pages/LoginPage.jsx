@@ -3,7 +3,6 @@ import merge from '../../core/merge';
 import setApiToken from '../../authorization/setApiToken';
 import trans from '../../i18n/trans';
 import post from '../../request/post';
-import Button from '@material-ui/core/Button';
 import makeValidateSyncWithTranslations from '../../core/makeValidateSyncWithTranslations';
 import * as yup from 'yup';
 import {Form} from 'react-final-form';
@@ -11,6 +10,8 @@ import Grid from '@material-ui/core/Grid';
 import {TextField} from 'mui-rff';
 import {withSnackbar} from 'notistack';
 import LoadingButton from '../core/LoadingButton';
+import {redirectTo} from '@reach/router';
+import {navigate} from '../../core/routerHistory';
 
 class LoginPage extends React.PureComponent {
     state = {
@@ -38,7 +39,7 @@ class LoginPage extends React.PureComponent {
 
             this.props.enqueueSnackbar(trans('login.success'));
 
-            this.props.navigate('/');
+            navigate('/');
         }).catch((error) => {
             this.props.enqueueSnackbar(trans('login.error'), {variant: 'error'});
         }).finally(() => {

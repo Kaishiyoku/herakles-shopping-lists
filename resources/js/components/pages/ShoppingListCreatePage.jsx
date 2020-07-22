@@ -14,6 +14,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import makeValidateSyncWithTranslations from '../../core/makeValidateSyncWithTranslations';
 import {withSnackbar} from 'notistack';
 import LoadingButton from '../core/LoadingButton';
+import {navigate} from '../../core/routerHistory';
 
 class ShoppingListCreatePage extends React.PureComponent {
     state = {
@@ -49,7 +50,7 @@ class ShoppingListCreatePage extends React.PureComponent {
         post('/shopping_lists', model).then((response) => {
             this.props.enqueueSnackbar(trans('shoppingLists.create.success'));
 
-            this.props.navigate('/');
+            navigate('/');
         }).catch((error) => {
             this.props.enqueueSnackbar(trans('shoppingLists.create.error'), {variant: 'error'});
         }).finally(() => {

@@ -19,6 +19,9 @@ const translations = {
         login: 'Login',
         logout: 'Logout',
     },
+    notAuthorized: {
+        title: 'Bitte melden Sie sich an',
+    },
     notFound: {
         description: 'Die von Ihnen aufgerufene Seite konnte nicht gefunden werden.',
         title: 'Seite nicht gefunden',

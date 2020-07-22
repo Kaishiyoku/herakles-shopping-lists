@@ -1,15 +1,8 @@
 import React from 'react';
 import {Router} from '@reach/router';
-import LoginPage from '../pages/LoginPage';
-import NotFoundPage from '../pages/NotFoundPage';
-import LogoutPage from '../pages/LogoutPage';
 import PropTypes from 'prop-types';
-import ShoppingListsPage from '../pages/ShoppingListsPage';
-import ShoppingListDetailPage from '../pages/ShoppingListDetailPage';
-import ShoppingListCreatePage from '../pages/ShoppingListCreatePage';
 import MainTheme from './MainTheme';
-
-const PlaceholderComponent = ({children}) => children;
+import getRoutes from '../../core/getRoutes';
 
 const MainLayout = ({navItems}) => {
     /*
@@ -29,15 +22,7 @@ const MainLayout = ({navItems}) => {
     return (
         <MainTheme>
             <Router>
-                <PlaceholderComponent path="/">
-                    <ShoppingListsPage path="/"/>
-                    <ShoppingListCreatePage path="/shopping_lists/create"/>
-                    <ShoppingListDetailPage path="/shopping_lists/:id"/>
-                </PlaceholderComponent>
-
-                <LoginPage path="/login"/>
-                <LogoutPage path="/logout"/>
-                <NotFoundPage default/>
+                {getRoutes()}
             </Router>
         </MainTheme>
     );
