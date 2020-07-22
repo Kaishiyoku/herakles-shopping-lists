@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import {Form} from 'react-final-form';
 import {Checkboxes, TextField} from 'mui-rff';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import * as Yup from 'yup';
 import Skeleton from '@material-ui/lab/Skeleton';
 import makeValidateSyncWithTranslations from '../../core/makeValidateSyncWithTranslations';
@@ -20,6 +19,7 @@ class ShoppingListCreatePage extends React.PureComponent {
     state = {
         canSubmit: false,
         isLoading: true,
+        isSubmitting: false,
         isUserSharingPanelExpanded: false,
         users: [],
     };
@@ -42,7 +42,7 @@ class ShoppingListCreatePage extends React.PureComponent {
 
     handleSubmit = (model) => {
         this.setState((prevState, props) => {
-            return merge(prevState, {isLoading: true});
+            return merge(prevState, {isSubmitting: true});
         }, () => this.sendCreateRequest(model));
     };
 
@@ -55,7 +55,7 @@ class ShoppingListCreatePage extends React.PureComponent {
             this.props.enqueueSnackbar(trans('shoppingLists.create.error'), {variant: 'error'});
         }).finally(() => {
             this.setState((prevState, props) => {
-                return merge(prevState, {isLoading: false});
+                return merge(prevState, {isSubmitting: false});
             });
         });
     }
@@ -102,8 +102,8 @@ class ShoppingListCreatePage extends React.PureComponent {
                                     type="submit"
                                     variant="contained"
                                     color="primary"
-                                    disabled={submitting || pristine || invalid || this.state.isLoading}
-                                    isLoading={this.state.isLoading}
+                                    disabled={pristine || invalid || this.state.isLoading}
+                                    isLoading={this.state.isSubmitting}
                                 >
                                     {trans('common.create')}
                                 </LoadingButton>
