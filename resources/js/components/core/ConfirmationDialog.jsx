@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import merge from '../../core/merge';
 import PropTypes from 'prop-types';
 import trans from '../../i18n/trans';
+import DeleteButton from './DeleteButton';
 
 class AlertDialog extends React.PureComponent {
     static propTypes = {
@@ -67,9 +68,9 @@ class AlertDialog extends React.PureComponent {
                         <Button onClick={this.handleClose} color="primary">
                             {trans('common.cancel')}
                         </Button>
-                        <Button onClick={this.handleConfirm} color="secondary" autoFocus>
+                        <DeleteButton onClick={this.handleConfirm} color="secondary" autoFocus>
                             {trans('common.confirm')}
-                        </Button>
+                        </DeleteButton>
                     </DialogActions>
                 </Dialog>
             </div>

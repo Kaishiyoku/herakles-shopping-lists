@@ -12,8 +12,19 @@ import {makeStyles, useTheme} from '@material-ui/core/styles';
 import config from '../../config';
 import getNavItems from '../../core/navigation/getNavItems';
 import {SnackbarProvider} from 'notistack';
+import {createMuiTheme} from '@material-ui/core';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import brown from '@material-ui/core/colors/brown';
+import blue from '@material-ui/core/colors/blue';
 
 const drawerWidth = 240;
+
+const mainTheme = createMuiTheme({
+    palette: {
+        primary: brown,
+        secondary: blue,
+    },
+});
 
 /* eslint-disable sort-keys */
 const useStyles = makeStyles((theme) => ({
@@ -80,70 +91,72 @@ function MainTheme(props) {
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
-        <div className={classes.root}>
-            <CssBaseline/>
+        <ThemeProvider theme={mainTheme}>
+            <div className={classes.root}>
+                <CssBaseline/>
 
-            <SnackbarProvider
-                maxSnack={3}
-                anchorOrigin={{
-                    horizontal: 'center',
-                    vertical: 'bottom',
-                }}
-                hideIconVariant
-            >
-                <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            edge="start"
-                            onClick={handleDrawerToggle}
-                            className={classes.menuButton}
-                        >
-                            <MenuIcon/>
-                        </IconButton>
-                        <Typography variant="h6" noWrap>
-                            {config.appTitle}
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <nav className={classes.drawer} aria-label="mailbox folders">
-                    <Hidden mdUp implementation="css">
-                        <Drawer
-                            container={container}
-                            variant="temporary"
-                            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                            open={mobileOpen}
-                            onClose={handleDrawerToggle}
-                            classes={{
-                                paper: classes.drawerPaper,
-                            }}
-                            ModalProps={{
-                                keepMounted: true,
-                            }}
-                        >
-                            {drawer(true)}
-                        </Drawer>
-                    </Hidden>
-                    <Hidden smDown implementation="css">
-                        <Drawer
-                            classes={{
-                                paper: classes.drawerPaper,
-                            }}
-                            variant="permanent"
-                            open
-                        >
-                            {drawer()}
-                        </Drawer>
-                    </Hidden>
-                </nav>
-                <main className={classes.content}>
-                    <div className={classes.toolbar}/>
+                <SnackbarProvider
+                    maxSnack={3}
+                    anchorOrigin={{
+                        horizontal: 'center',
+                        vertical: 'bottom',
+                    }}
+                    hideIconVariant
+                >
+                    <AppBar position="fixed" className={classes.appBar}>
+                        <Toolbar>
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                edge="start"
+                                onClick={handleDrawerToggle}
+                                className={classes.menuButton}
+                            >
+                                <MenuIcon/>
+                            </IconButton>
+                            <Typography variant="h6" noWrap>
+                                {config.appTitle}
+                            </Typography>
+                        </Toolbar>
+                    </AppBar>
+                    <nav className={classes.drawer} aria-label="mailbox folders">
+                        <Hidden mdUp implementation="css">
+                            <Drawer
+                                container={container}
+                                variant="temporary"
+                                anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                                open={mobileOpen}
+                                onClose={handleDrawerToggle}
+                                classes={{
+                                    paper: classes.drawerPaper,
+                                }}
+                                ModalProps={{
+                                    keepMounted: true,
+                                }}
+                            >
+                                {drawer(true)}
+                            </Drawer>
+                        </Hidden>
+                        <Hidden smDown implementation="css">
+                            <Drawer
+                                classes={{
+                                    paper: classes.drawerPaper,
+                                }}
+                                variant="permanent"
+                                open
+                            >
+                                {drawer()}
+                            </Drawer>
+                        </Hidden>
+                    </nav>
+                    <main className={classes.content}>
+                        <div className={classes.toolbar}/>
 
-                    {children}
-                </main>
-            </SnackbarProvider>
-        </div>
+                        {children}
+                    </main>
+                </SnackbarProvider>
+            </div>
+        </ThemeProvider>
     );
 }
 

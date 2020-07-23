@@ -17,6 +17,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import formatNumberExceeds from '../../../core/formatNumberExceeds';
+import ShoppingListNumberAvatar from './ShoppingListNumberAvatar';
 
 class ShoppingListsPage extends React.PureComponent {
     state = {
@@ -41,9 +42,9 @@ class ShoppingListsPage extends React.PureComponent {
             <div key={slugify(`${name}-${id}`)}>
                 <ListItem button component={Link} to={`/shopping_lists/${id}`}>
                     <ListItemAvatar>
-                        <Avatar>
+                        <ShoppingListNumberAvatar>
                             {formatNumberExceeds(99, length(shoppingListEntries))}
-                        </Avatar>
+                        </ShoppingListNumberAvatar>
                     </ListItemAvatar>
                     <ListItemText primary={name}/>
                 </ListItem>
