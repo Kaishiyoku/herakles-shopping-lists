@@ -44,7 +44,7 @@ class ShoppingListController extends Controller
             $shoppingList->users()->attach($data['user_ids']);
         }
 
-        return response()->json();
+        return response()->json($shoppingList);
     }
 
     /**

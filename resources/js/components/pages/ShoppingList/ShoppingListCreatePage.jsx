@@ -54,10 +54,10 @@ class ShoppingListCreatePage extends React.PureComponent {
     };
 
     sendCreateRequest(model) {
-        post('/shopping_lists', model).then((response) => {
+        post('/shopping_lists', model).then(({data}) => {
             this.props.enqueueSnackbar(trans('shoppingLists.create.success'));
 
-            navigate('/');
+            navigate(`/shopping_lists/${data.id}`);
         }).catch((error) => {
             this.props.enqueueSnackbar(trans('shoppingLists.create.error'), {variant: 'error'});
         }).finally(() => {
