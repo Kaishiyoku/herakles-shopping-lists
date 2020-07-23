@@ -16,6 +16,8 @@ import {createMuiTheme} from '@material-ui/core';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import brown from '@material-ui/core/colors/brown';
 import blue from '@material-ui/core/colors/blue';
+import {default as MotionDrawer} from 'react-motion-drawer';
+import classNames from 'classnames';
 
 const drawerWidth = 240;
 
@@ -119,23 +121,25 @@ function MainTheme(props) {
                             </Typography>
                         </Toolbar>
                     </AppBar>
-                    <nav className={classes.drawer} aria-label="mailbox folders">
+                    <nav className={classNames(classes.drawer, 'mobile-navigation')} aria-label="mailbox folders">
                         <Hidden mdUp implementation="css">
-                            <Drawer
-                                container={container}
-                                variant="temporary"
-                                anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                                open={mobileOpen}
-                                onClose={handleDrawerToggle}
-                                classes={{
-                                    paper: classes.drawerPaper,
-                                }}
-                                ModalProps={{
-                                    keepMounted: true,
-                                }}
-                            >
-                                {drawer(true)}
-                            </Drawer>
+                            <MotionDrawer open={mobileOpen} onChange={handleDrawerToggle} handleWidth={50} overlayColor="transparent" zIndex={10}>
+                                <Drawer
+                                    container={container}
+                                    variant="temporary"
+                                    anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                                    open={mobileOpen}
+                                    onClose={handleDrawerToggle}
+                                    classes={{
+                                        paper: classes.drawerPaper,
+                                    }}
+                                    ModalProps={{
+                                        keepMounted: true,
+                                    }}
+                                >
+                                    {drawer(true)}
+                                </Drawer>
+                            </MotionDrawer>
                         </Hidden>
                         <Hidden smDown implementation="css">
                             <Drawer

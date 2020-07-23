@@ -48,6 +48,7 @@
         "react-content-loader": "^5.1.0",
         "react-dom": "^16.13.1",
         "react-final-form": "^6.5.1",
+        "react-motion-drawer": "^3.1.0",
         "react-transition-group": "^4.4.1",
         "resolve-url-loader": "^3.1.0",
         "rxjs": "^6.6.0",
