@@ -58,7 +58,7 @@ class ShoppingListDetailPage extends React.PureComponent {
                             </Grid>
                             <Grid item>
                                 <Typography variant="h3" gutterBottom>
-                                    {isLoading ? <Skeleton animation="wave" width={200}/> : name}
+                                    {isLoading ? <Skeleton animation="wave" width={300}/> : name}
                                 </Typography>
                             </Grid>
                         </Grid>
