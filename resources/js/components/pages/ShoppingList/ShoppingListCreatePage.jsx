@@ -14,11 +14,8 @@ import makeValidateSyncWithTranslations from '../../../core/makeValidateSyncWith
 import {withSnackbar} from 'notistack';
 import LoadingButton from '../../core/LoadingButton';
 import {navigate} from '../../../core/routerHistory';
-import Fade from '@material-ui/core/Fade';
-import Grow from '@material-ui/core/Grow';
-import Slide from '@material-ui/core/Slide';
-import Zoom from '@material-ui/core/Zoom';
 import withFade from '../../core/withFade';
+import Button from '@material-ui/core/Button';
 
 const SampleComponent = (props) => <div {...props}>Fade</div>;
 
@@ -57,8 +54,7 @@ class ShoppingListCreatePage extends React.PureComponent {
         post('/shopping_lists', model).then(({data}) => {
             this.props.enqueueSnackbar(trans('shoppingLists.create.success'));
 
-            navigate(`/shopping_lists/${data.id}`);
-        }).catch((error) => {
+            navigate(`/shopping_lists/${data.id}`);}).catch((error) => {
             this.props.enqueueSnackbar(trans('shoppingLists.create.error'), {variant: 'error'});
         }).finally(() => {
             this.setState((prevState, props) => {
@@ -81,44 +77,55 @@ class ShoppingListCreatePage extends React.PureComponent {
         const validate = makeValidateSyncWithTranslations(ShoppingListCreatePage.formValidationSchema);
 
         return (
-            <Form
-                onSubmit={this.handleSubmit}
-                initialValues={{}}
-                validate={validate}
-                render={({handleSubmit, values, submitting, pristine, invalid}) => (
-                    <form onSubmit={handleSubmit} noValidate>
-                        <Grid container direction="column" alignContent="stretch" justify="space-between" spacing={4}>
-                            <Grid item>
-                                <TextField label={trans('validation.attributes.name')} name="name" required={true}/>
-                            </Grid>
+            <>
+                <Form
+                    onSubmit={this.handleSubmit}
+                    initialValues={{}}
+                    validate={validate}
+                    render={({handleSubmit, values, submitting, pristine, invalid}) => (
+                        <form onSubmit={handleSubmit} noValidate>
+                            <Grid container direction="column" alignContent="stretch" justify="space-between" spacing={4}>
+                                <Grid item>
+                                    <TextField label={trans('validation.attributes.name')} name="name" required={true}/>
+                                </Grid>
 
-                            <Grid item>
-                                {
-                                    this.state.isLoading
-                                        ? range(0, 5).map((i) => <Skeleton key={i} animation="wave" width="30%"/>)
-                                        : <Checkboxes
-                                            label={trans('shoppingLists.create.shareWithUsers')}
-                                            name="user_ids"
-                                            data={this.getShareWithUsersCheckboxData()}
-                                        />
-                                }
-                            </Grid>
+                                <Grid item>
+                                    {
+                                        this.state.isLoading
+                                            ? range(0, 5).map((i) => <Skeleton key={i} animation="wave" width="30%"/>)
+                                            : <Checkboxes
+                                                label={trans('shoppingLists.create.shareWithUsers')}
+                                                name="user_ids"
+                                                data={this.getShareWithUsersCheckboxData()}
+                                            />
+                                    }
+                                </Grid>
 
-                            <Grid item>
-                                <LoadingButton
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    disabled={pristine || invalid || this.state.isLoading}
-                                    isLoading={this.state.isSubmitting}
-                                >
-                                    {trans('common.create')}
-                                </LoadingButton>
+                                <Grid item>
+                                    <Grid container justify="space-between">
+                                        <Grid item>
+                                            <LoadingButton
+                                                type="submit"
+                                                variant="contained"
+                                                color="primary"
+                                                disabled={pristine || invalid || this.state.isLoading}
+                                                isLoading={this.state.isSubmitting}
+                                            >
+                                                {trans('common.create')}
+                                            </LoadingButton>
+                                        </Grid>
+                                        <Grid item>
+                                            <Button onClick={() => navigate('/shopping_lists')}>
+                                                {trans('common.cancel')}
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </form>
-                )}
-            />
+                        </form>
+                    )}
+                />
+            </>
         );
     }
 
