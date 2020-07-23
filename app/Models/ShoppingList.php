@@ -34,6 +34,15 @@ class ShoppingList extends Model
         'name',
     ];
 
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        'shoppingListEntries',
+    ];
+
     public function users()
     {
         return $this->belongsToMany(User::class)->withPivot('is_creator')->using(ShoppingListUser::class);

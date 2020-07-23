@@ -16,7 +16,7 @@ class ShoppingListController extends Controller
      */
     public function index()
     {
-        $shoppingLists = auth('api')->user()->shoppingLists()->with('shoppingListEntries')->get()->map('formatDefaultShoppingListName');
+        $shoppingLists = auth('api')->user()->shoppingLists->map('formatDefaultShoppingListName');
 
         return response()->json($shoppingLists);
     }
