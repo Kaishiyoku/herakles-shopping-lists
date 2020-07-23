@@ -9,11 +9,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import {Link} from '@reach/router';
 import Skeleton from '@material-ui/lab/Skeleton';
-import {range} from 'ramda';
-import isAuthorized from '../../../authorization/isAuthorized';
-import NotAuthorizedPage from '../NotAuthorizedPage';
+import {length, range} from 'ramda';
 import {navigate} from '../../../core/routerHistory';
 import withFade from '../../core/withFade';
+import Divider from '@material-ui/core/Divider';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+import formatNumberExceeds from '../../../core/formatNumberExceeds';
 
 class ShoppingListsPage extends React.PureComponent {
     state = {
@@ -22,9 +25,9 @@ class ShoppingListsPage extends React.PureComponent {
     };
 
     componentDidMount() {
-        get('/shopping_lists').then((response) => {
+        get('/shopping_lists').then(({data}) => {
             this.setState((prevState, props) => {
-                return merge(prevState, {isLoading: false, shoppingLists: response.data});
+                return merge(prevState, {isLoading: false, shoppingLists: data});
             });
         });
     }
@@ -34,10 +37,18 @@ class ShoppingListsPage extends React.PureComponent {
             return range(0, 5).map((i) => <ListItem key={i} animation="wave"><Skeleton animation="wave" width="100%"/></ListItem>);
         }
 
-        return this.state.shoppingLists.map(({name, id}) => (
-            <ListItem button key={slugify(`${name}-${id}`)} component={Link} to={`/shopping_lists/${id}`}>
-                {name}
-            </ListItem>
+        return this.state.shoppingLists.map(({name, id, shopping_list_entries: shoppingListEntries}, i) => (
+            <div key={slugify(`${name}-${id}`)}>
+                <ListItem button component={Link} to={`/shopping_lists/${id}`}>
+                    <ListItemAvatar>
+                        <Avatar>
+                            {formatNumberExceeds(99, length(shoppingListEntries))}
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={name}/>
+                </ListItem>
+                {i < (length(this.state.shoppingLists) - 1) && <Divider variant="inset"/>}
+            </div>
         ));
     }
 

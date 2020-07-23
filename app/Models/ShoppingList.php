@@ -38,4 +38,9 @@ class ShoppingList extends Model
     {
         return $this->belongsToMany(User::class)->withPivot('is_creator')->using(ShoppingListUser::class);
     }
+
+    public function shoppingListEntries()
+    {
+        return $this->hasMany(ShoppingListEntry::class);
+    }
 }

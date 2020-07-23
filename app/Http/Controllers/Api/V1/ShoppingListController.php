@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\ShoppingList;
+use App\Models\ShoppingListEntry;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class ShoppingListController extends Controller
      */
     public function index()
     {
-        $shoppingLists = auth('api')->user()->shoppingLists->map('formatDefaultShoppingListName');
+        $shoppingLists = auth('api')->user()->shoppingLists()->with('shoppingListEntries')->get()->map('formatDefaultShoppingListName');
 
         return response()->json($shoppingLists);
     }
