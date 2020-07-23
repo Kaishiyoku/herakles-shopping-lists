@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShoppingList whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShoppingList whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ShoppingListEntry[] $shoppingListEntries
+ * @property-read int|null $shopping_list_entries_count
  */
 class ShoppingList extends Model
 {
