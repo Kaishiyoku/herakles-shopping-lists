@@ -54,13 +54,11 @@ class ShoppingListDetailPage extends React.PureComponent {
                     <Grid item>
                         <Grid container>
                             <Grid item>
-                                <ShoppingListNumberAvatar className={classes.avatar}>
-                                    {formatNumberExceeds(99, length(shoppingListEntries))}
-                                </ShoppingListNumberAvatar>
+                                {isLoading ? <Skeleton animation="wave" variant="circle" width={45} height={45} className={classes.avatar}/> : <ShoppingListNumberAvatar className={classes.avatar}>{formatNumberExceeds(99, length(shoppingListEntries))}</ShoppingListNumberAvatar>}
                             </Grid>
                             <Grid item>
                                 <Typography variant="h3" gutterBottom>
-                                    {isLoading ? <Skeleton animation="wave" width="30%"/> : name}
+                                    {isLoading ? <Skeleton animation="wave" width={200}/> : name}
                                 </Typography>
                             </Grid>
                         </Grid>
