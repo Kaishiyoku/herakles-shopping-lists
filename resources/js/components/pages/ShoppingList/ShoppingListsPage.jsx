@@ -1,8 +1,8 @@
 import React from 'react';
-import get from '../../request/get';
-import merge from '../../core/merge';
+import get from '../../../request/get';
+import merge from '../../../core/merge';
 import {slugify} from 'transliteration';
-import trans from '../../i18n/trans';
+import trans from '../../../i18n/trans';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
@@ -10,10 +10,10 @@ import ListItem from '@material-ui/core/ListItem';
 import {Link} from '@reach/router';
 import Skeleton from '@material-ui/lab/Skeleton';
 import {range} from 'ramda';
-import isAuthorized from '../../authorization/isAuthorized';
-import NotAuthorizedPage from './NotAuthorizedPage';
-import {navigate} from '../../core/routerHistory';
-import withFade from '../core/withFade';
+import isAuthorized from '../../../authorization/isAuthorized';
+import NotAuthorizedPage from '../NotAuthorizedPage';
+import {navigate} from '../../../core/routerHistory';
+import withFade from '../../core/withFade';
 
 class ShoppingListsPage extends React.PureComponent {
     state = {

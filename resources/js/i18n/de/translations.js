@@ -49,6 +49,10 @@ const translations = {
             deleteShoppingList: 'Einkaufsliste löschen',
         },
     },
+    unauthorizedAccess: {
+        description: 'Sie haben keine Berechtigung diese Seite zu sehen.',
+        title: 'Keine Berechtigung',
+    },
     validation: {
         attributes: {
             email: 'E-Mail',

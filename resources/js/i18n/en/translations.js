@@ -25,7 +25,7 @@ const translations = {
         logout: 'Logout',
     },
     notFound: {
-        description: 'The page you requested does not exit.',
+        description: 'The page you requested was not found.',
         title: 'Page not found',
     },
     shoppingLists: {
@@ -45,6 +45,10 @@ const translations = {
         details: {
             deleteShoppingList: 'Delete shopping list',
         },
+    },
+    unauthorizedAccess: {
+        description: 'You don\'t have permission to view this page.',
+        title: 'No permission',
     },
     validation: {
         attributes: {

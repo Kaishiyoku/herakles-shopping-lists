@@ -1,8 +1,8 @@
 import React from 'react';
-import merge from '../../core/merge';
-import post from '../../request/post';
-import trans from '../../i18n/trans';
-import get from '../../request/get';
+import merge from '../../../core/merge';
+import post from '../../../request/post';
+import trans from '../../../i18n/trans';
+import get from '../../../request/get';
 import {range} from 'ramda';
 import Typography from '@material-ui/core/Typography';
 import {Form} from 'react-final-form';
@@ -10,15 +10,15 @@ import {Checkboxes, TextField} from 'mui-rff';
 import Grid from '@material-ui/core/Grid';
 import * as Yup from 'yup';
 import Skeleton from '@material-ui/lab/Skeleton';
-import makeValidateSyncWithTranslations from '../../core/makeValidateSyncWithTranslations';
+import makeValidateSyncWithTranslations from '../../../core/makeValidateSyncWithTranslations';
 import {withSnackbar} from 'notistack';
-import LoadingButton from '../core/LoadingButton';
-import {navigate} from '../../core/routerHistory';
+import LoadingButton from '../../core/LoadingButton';
+import {navigate} from '../../../core/routerHistory';
 import Fade from '@material-ui/core/Fade';
 import Grow from '@material-ui/core/Grow';
 import Slide from '@material-ui/core/Slide';
 import Zoom from '@material-ui/core/Zoom';
-import withFade from '../core/withFade';
+import withFade from '../../core/withFade';
 
 const SampleComponent = (props) => <div {...props}>Fade</div>;
 

@@ -4,13 +4,13 @@ import trans from '../../i18n/trans';
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
 
-const NotFoundPage = () => {
+const UnauthorizedAccessPage = () => {
     return (
         <Alert severity="error">
-            <AlertTitle>{trans('notFound.title')}</AlertTitle>
-            {trans('notFound.description')}
+            <AlertTitle>{trans('unauthorizedAccess.title')}</AlertTitle>
+            {trans('unauthorizedAccess.description')}
         </Alert>
     );
 };
 
-export default withFade(NotFoundPage);
+export default withFade(UnauthorizedAccessPage);
