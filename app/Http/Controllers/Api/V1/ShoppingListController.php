@@ -82,6 +82,7 @@ class ShoppingListController extends Controller
     {
         $this->authorize('delete', $shoppingList);
 
+        $shoppingList->shoppingListEntries()->delete();
         $shoppingList->users()->detach();
         $shoppingList->delete();
 
