@@ -12,22 +12,67 @@ import PropTypes from 'prop-types';
 import DeleteButton from '../../core/DeleteButton';
 import Grid from '@material-ui/core/Grid';
 import formatNumberExceeds from '../../../core/formatNumberExceeds';
-import {length} from 'ramda';
+import {length, range} from 'ramda';
 import ShoppingListNumberAvatar from './ShoppingListNumberAvatar';
 import {withStyles} from '@material-ui/core';
+import ShoppingListEntryCreatePage from './ShoppingListEntryCreatePage';
+import Dialog from '@material-ui/core/Dialog';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
+import FullscreenDialogTransition from '../../core/FullscreenDialogTransition';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import merge from '../../../core/merge';
+import List from '@material-ui/core/List';
+import Paper from '@material-ui/core/Paper';
+import {slugify} from 'transliteration';
+import ListItem from '@material-ui/core/ListItem';
+import {Link} from '@reach/router';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 
-const styles = {
+const styles = (theme) => ({
+    appBar: {
+        position: 'relative',
+    },
     avatar: {
         marginRight: '10px',
         marginTop: '8px',
     },
-};
+    fab: {
+        bottom: 20,
+        left: 'auto',
+        margin: 0,
+        position: 'fixed',
+        right: 20,
+        top: 'auto',
+    },
+    title: {
+        flex: 1,
+        marginLeft: theme.spacing(2),
+    },
+});
 
 class ShoppingListDetailPage extends React.PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired,
+        dataLoaderFn: PropTypes.func.isRequired,
         isLoading: PropTypes.bool.isRequired,
     };
+
+    state = {
+        isCreateEntryDialogOpen: false,
+    };
+
+    constructor(props, context) {
+        super(props, context);
+
+        this.createEntrySubmitButtonRef = React.createRef();
+    }
 
     deleteShoppingList = () => {
         const {id, name} = this.props.data;
@@ -39,8 +84,59 @@ class ShoppingListDetailPage extends React.PureComponent {
         });
     };
 
+    handleOpenCreateEntryDialog = () => {
+        this.toggleIsCreateEntryDialogOpen(true);
+    };
+
+    handleCloseCreateEntryDialog = () => {
+        this.toggleIsCreateEntryDialogOpen(false);
+    };
+
+    toggleIsCreateEntryDialogOpen = (isCreateEntryDialogOpen) => {
+        this.setState((prevState, props) => {
+            return merge(prevState, {isCreateEntryDialogOpen});
+        });
+    };
+
+    handleCreateEntrySuccess = (callback) => {
+        this.props.dataLoaderFn(() => {
+            this.setState((prevState, props) => {
+                return merge(prevState, {isCreateEntryDialogOpen: false});
+            }, callback);
+        });
+    };
+
+    renderEntries() {
+        const {data, isLoading} = this.props;
+        const {shopping_list_entries: shoppingListEntries} = data;
+
+        if (isLoading) {
+            return range(0, 5).map((i) => <ListItem key={i} animation="wave"><Skeleton animation="wave" width="100%"/></ListItem>);
+        }
+
+        if (length(shoppingListEntries) === 0) {
+            return <Typography variant="h5">{trans('shoppingLists.details.noEntriesYet')}</Typography>;
+        }
+
+        return (
+            <Paper>
+                <List>
+                    {shoppingListEntries.map((shoppingListEntry, i) => (
+                        <div key={slugify(`${shoppingListEntry.id}}`)}>
+                            <ListItem>
+                                <ListItemText primary={shoppingListEntry.description}/>
+                            </ListItem>
+                            {i < (length(shoppingListEntries) - 1) && <Divider variant="fullWidth"/>}
+                        </div>
+                    ))}
+                </List>
+            </Paper>
+        );
+    }
+
     render() {
         const {isLoading, data, classes} = this.props;
+        const {isCreateEntryDialogOpen} = this.state;
         const {name, shopping_list_entries: shoppingListEntries} = data;
 
         return (
@@ -73,6 +169,34 @@ class ShoppingListDetailPage extends React.PureComponent {
                         />
                     </Grid>
                 </Grid>
+
+                {this.renderEntries()}
+
+                <Dialog fullScreen open={isCreateEntryDialogOpen} onClose={this.handleCloseCreateEntryDialog} TransitionComponent={FullscreenDialogTransition}>
+                    <AppBar className={classes.appBar}>
+                        <Toolbar>
+                            <IconButton edge="start" color="inherit" onClick={this.handleCloseCreateEntryDialog} aria-label="close">
+                                <CloseIcon/>
+                            </IconButton>
+                            <Typography variant="h6" className={classes.title}>
+                                {trans('shoppingLists.createEntry.title')}
+                            </Typography>
+                            <Button ref={this.createEntrySubmitButtonRef} autoFocus color="inherit" onClick={() => document.getElementById('entryCreateForm').dispatchEvent(new Event('submit', {cancelable: true}))}>
+                                {trans('common.create')}
+                            </Button>
+                        </Toolbar>
+                    </AppBar>
+
+                    <ShoppingListEntryCreatePage
+                        handleSuccess={this.handleCreateEntrySuccess}
+                        shoppingListId={this.props.data.id}
+                        submitButtonRef={this.createEntrySubmitButtonRef}
+                    />
+                </Dialog>
+
+                <Fab color="primary" aria-label="add" className={classes.fab} onClick={this.handleOpenCreateEntryDialog}>
+                    <AddIcon/>
+                </Fab>
             </>
         );
     }

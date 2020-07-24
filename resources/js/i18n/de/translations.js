@@ -38,6 +38,11 @@ const translations = {
             success: 'Einkaufsliste erstellt.',
             title: 'Neue Einkaufsliste erstellen',
         },
+        createEntry: {
+            error: 'Eintrag konnte nicht erstellt werden.',
+            success: 'Eintrag erstellt.',
+            title: 'Neuer Eintrag',
+        },
         default: 'Standardliste',
         destroy: {
             confirmation: {
@@ -47,6 +52,7 @@ const translations = {
         },
         details: {
             deleteShoppingList: 'Einkaufsliste löschen',
+            noEntriesYet: 'Noch keine Einträge vorhanden.',
         },
     },
     unauthorizedAccess: {
@@ -55,6 +61,7 @@ const translations = {
     },
     validation: {
         attributes: {
+            description: 'Beschreibung',
             email: 'E-Mail',
             name: 'Name',
             password: 'Passwort',

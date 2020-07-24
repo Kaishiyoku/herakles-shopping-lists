@@ -36,7 +36,7 @@ class ShoppingListEntry extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'description',
     ];
 
     public function user()

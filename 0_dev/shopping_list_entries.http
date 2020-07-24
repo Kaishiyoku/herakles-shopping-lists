@@ -1,0 +1,9 @@
+### Add item
+POST {{host}}/api/v1/shopping_lists/1/shopping_list_entries
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "description": "Entry Test 1"
+}

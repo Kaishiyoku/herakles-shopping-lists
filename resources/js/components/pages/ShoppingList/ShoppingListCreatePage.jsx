@@ -17,14 +17,10 @@ import {navigate} from '../../../core/routerHistory';
 import withFade from '../../core/withFade';
 import Button from '@material-ui/core/Button';
 
-const SampleComponent = (props) => <div {...props}>Fade</div>;
-
 class ShoppingListCreatePage extends React.PureComponent {
     state = {
-        canSubmit: false,
         isLoading: true,
         isSubmitting: false,
-        isUserSharingPanelExpanded: false,
         users: [],
     };
 
@@ -36,14 +32,6 @@ class ShoppingListCreatePage extends React.PureComponent {
         });
     }
 
-    enableSubmitButton = () => {
-        this.setState({canSubmit: true});
-    };
-
-    disableSubmitButton = () => {
-        this.setState({canSubmit: false});
-    };
-
     handleSubmit = (model) => {
         this.setState((prevState, props) => {
             return merge(prevState, {isSubmitting: true});
@@ -54,7 +42,8 @@ class ShoppingListCreatePage extends React.PureComponent {
         post('/shopping_lists', model).then(({data}) => {
             this.props.enqueueSnackbar(trans('shoppingLists.create.success'));
 
-            navigate(`/shopping_lists/${data.id}`);}).catch((error) => {
+            navigate(`/shopping_lists/${data.id}`);
+        }).catch((error) => {
             this.props.enqueueSnackbar(trans('shoppingLists.create.error'), {variant: 'error'});
         }).finally(() => {
             this.setState((prevState, props) => {

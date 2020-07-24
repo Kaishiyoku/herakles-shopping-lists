@@ -24,6 +24,9 @@ const translations = {
         login: 'Login',
         logout: 'Logout',
     },
+    notAuthorized: {
+        title: 'Please log in',
+    },
     notFound: {
         description: 'The page you requested was not found.',
         title: 'Page not found',
@@ -52,6 +55,7 @@ const translations = {
     },
     validation: {
         attributes: {
+            description: 'Description',
             email: 'Email',
             name: 'Name',
             password: 'Password',
