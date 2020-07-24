@@ -44,7 +44,7 @@ class ShoppingListEntryCreatePage extends React.PureComponent {
 
         post(`/shopping_lists/${shoppingListId}/shopping_list_entries`, model).then(({data}) => {
             const action = (key) => (
-                <Button color="secondary" onClick={() => this.props.closeSnackbar(key)}>Dismiss</Button>
+                <Button color="secondary" onClick={() => this.props.closeSnackbar(key)}>{trans('common.close')}</Button>
             );
 
             handleSuccess(() => this.props.enqueueSnackbar(trans('shoppingLists.createEntry.success'), {action}));

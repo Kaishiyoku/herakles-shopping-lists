@@ -29,6 +29,7 @@ class ShoppingListEntryController extends Controller
         $shoppingListEntry->user_id = auth('api')->user()->id;
 
         $shoppingList->shoppingListEntries()->save($shoppingListEntry);
+        $shoppingList->touch();
 
         return response()->json($shoppingListEntry);
     }

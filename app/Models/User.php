@@ -70,6 +70,10 @@ class User extends Authenticatable
 
     public function shoppingLists()
     {
-        return $this->belongsToMany(ShoppingList::class)->withPivot('is_creator')->using(ShoppingListUser::class);
+        return $this
+            ->belongsToMany(ShoppingList::class)
+            ->withPivot('is_creator')
+            ->using(ShoppingListUser::class)
+            ->orderBy('updated_at', 'desc');
     }
 }

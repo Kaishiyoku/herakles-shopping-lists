@@ -52,6 +52,6 @@ class ShoppingList extends Model
 
     public function shoppingListEntries()
     {
-        return $this->hasMany(ShoppingListEntry::class);
+        return $this->hasMany(ShoppingListEntry::class)->orderBy('updated_at', 'desc');
     }
 }
