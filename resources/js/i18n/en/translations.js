@@ -38,6 +38,11 @@ const translations = {
             success: 'Shopping list created.',
             title: 'Add new shopping list',
         },
+        createEntry: {
+            error: 'Entry couldn\'t be created.',
+            success: 'Entry created.',
+            title: 'New entry',
+        },
         default: 'Default list',
         destroy: {
             confirmation: {
@@ -47,6 +52,8 @@ const translations = {
         },
         details: {
             deleteShoppingList: 'Delete shopping list',
+            noEntriesYet: 'No entries yet.',
+            sharedWith: 'Shared with',
         },
     },
     unauthorizedAccess: {
