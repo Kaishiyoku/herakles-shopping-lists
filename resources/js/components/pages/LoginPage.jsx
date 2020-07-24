@@ -12,6 +12,7 @@ import {withSnackbar} from 'notistack';
 import LoadingButton from '../core/LoadingButton';
 import {navigate} from '../../core/routerHistory';
 import withFade from '../core/withFade';
+import setUserId from '../../authorization/setUserId';
 
 class LoginPage extends React.PureComponent {
     state = {
@@ -35,6 +36,7 @@ class LoginPage extends React.PureComponent {
 
     sendLoginRequest(model) {
         post('/login', model).then((response) => {
+            setUserId(response.data.id);
             setApiToken(response.data.api_token);
 
             this.props.enqueueSnackbar(trans('login.success'));

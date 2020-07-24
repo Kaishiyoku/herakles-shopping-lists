@@ -15,6 +15,7 @@ import formatNumberExceeds from '../../../core/formatNumberExceeds';
 import {length} from 'ramda';
 import ShoppingListNumberAvatar from './ShoppingListNumberAvatar';
 import {withStyles} from '@material-ui/core';
+import getUserId from '../../../authorization/getUserId';
 
 const styles = {
     avatar: {
@@ -41,7 +42,9 @@ class ShoppingListDetailPage extends React.PureComponent {
 
     render() {
         const {isLoading, data, classes} = this.props;
-        const {name, shopping_list_entries: shoppingListEntries} = data;
+        const {name, shopping_list_entries: shoppingListEntries, users} = data;
+
+        const sharedWith = users.filter((user) => user.id !== getUserId()).map((user) => user.name);
 
         return (
             <>
@@ -73,6 +76,8 @@ class ShoppingListDetailPage extends React.PureComponent {
                         />
                     </Grid>
                 </Grid>
+
+                Geteilt mit {sharedWith}
             </>
         );
     }

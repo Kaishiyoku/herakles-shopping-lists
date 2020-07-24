@@ -7,7 +7,9 @@ import {compose} from 'ramda';
 function withShoppingListLoader(WrappedComponent) {
     return class extends React.PureComponent {
         state = {
-            data: {},
+            data: {
+                users: [],
+            },
             errorStatusCode: null,
             isLoading: true,
         };
