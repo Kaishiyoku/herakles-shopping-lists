@@ -35,6 +35,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import getUserId from '../../../authorization/getUserId';
+import Box from '@material-ui/core/Box';
 
 const styles = (theme) => ({
     appBar: {
@@ -112,7 +113,7 @@ class ShoppingListDetailPage extends React.PureComponent {
         const {shopping_list_entries: shoppingListEntries} = data;
 
         if (isLoading) {
-            return range(0, 5).map((i) => <ListItem key={i} animation="wave"><Skeleton animation="wave" width="100%"/></ListItem>);
+            return range(0, 7).map((i) => <Box mb={1} key={i}><Skeleton animation="wave" width="100%"/></Box>);
         }
 
         if (length(shoppingListEntries) === 0) {
@@ -135,12 +136,22 @@ class ShoppingListDetailPage extends React.PureComponent {
         );
     }
 
+    renderSharedWith() {
+        if (this.props.isLoading) {
+            return <p><Skeleton animation="wave" width={200}/></p>;
+        }
+
+        return (
+            <p>
+                {trans('shoppingLists.details.sharedWith')}: {this.props.data.users.filter(({id}) => id !== getUserId()).map(({name}) => name).join(', ')}
+            </p>
+        );
+    }
+
     render() {
         const {isLoading, data, classes} = this.props;
         const {isCreateEntryDialogOpen} = this.state;
         const {name, shopping_list_entries: shoppingListEntries, users} = data;
-
-        const sharedWith = users.filter((user) => user.id !== getUserId()).map((user) => user.name);
 
         return (
             <>
@@ -164,14 +175,18 @@ class ShoppingListDetailPage extends React.PureComponent {
                     </Grid>
 
                     <Grid item>
-                        <AlertDialog
-                            buttonTitle="Delete shopping list"
-                            buttonComponent={<DeleteButton variant="outlined">{trans('shoppingLists.details.deleteShoppingList')}</DeleteButton>}
-                            description={trans('shoppingLists.destroy.confirmation.description', {name})}
-                            onConfirm={this.deleteShoppingList}
-                        />
+                        {isLoading ? <Skeleton animation="wave" width={200} height={40}/> : (
+                            <AlertDialog
+                                buttonTitle="Delete shopping list"
+                                buttonComponent={<DeleteButton variant="outlined">{trans('shoppingLists.details.deleteShoppingList')}</DeleteButton>}
+                                description={trans('shoppingLists.destroy.confirmation.description', {name})}
+                                onConfirm={this.deleteShoppingList}
+                            />
+                        )}
                     </Grid>
                 </Grid>
+
+                {this.renderSharedWith()}
 
                 {this.renderEntries()}
 

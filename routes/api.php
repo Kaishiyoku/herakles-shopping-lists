@@ -27,7 +27,8 @@ Route::prefix('v1')->group(function () {
 
             return response()->json($users);
         });
-        Route::resource('shopping_lists', 'Api\V1\ShoppingListController');
+        Route::resource('shopping_lists', 'Api\V1\ShoppingListController')->except(['create', 'edit']);
+        Route::resource('shopping_lists.shopping_list_entries', 'Api\V1\ShoppingListEntryController')->only(['store', 'update', 'destroy']);
     });
 
     Route::any('{all}', function () {

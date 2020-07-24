@@ -53,6 +53,7 @@ const translations = {
         details: {
             deleteShoppingList: 'Einkaufsliste löschen',
             noEntriesYet: 'Noch keine Einträge vorhanden.',
+            sharedWith: 'Geteilt mit',
         },
     },
     unauthorizedAccess: {
