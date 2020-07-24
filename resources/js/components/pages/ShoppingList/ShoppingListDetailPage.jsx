@@ -34,6 +34,7 @@ import {Link} from '@reach/router';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+import getUserId from '../../../authorization/getUserId';
 
 const styles = (theme) => ({
     appBar: {
@@ -137,7 +138,9 @@ class ShoppingListDetailPage extends React.PureComponent {
     render() {
         const {isLoading, data, classes} = this.props;
         const {isCreateEntryDialogOpen} = this.state;
-        const {name, shopping_list_entries: shoppingListEntries} = data;
+        const {name, shopping_list_entries: shoppingListEntries, users} = data;
+
+        const sharedWith = users.filter((user) => user.id !== getUserId()).map((user) => user.name);
 
         return (
             <>

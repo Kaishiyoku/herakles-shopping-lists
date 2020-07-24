@@ -11,6 +11,7 @@ function withShoppingListLoader(WrappedComponent) {
             data: {
                 // eslint-disable-next-line camelcase
                 shopping_list_entries: [],
+                users: [],
             },
             errorStatusCode: null,
             isLoading: true,
