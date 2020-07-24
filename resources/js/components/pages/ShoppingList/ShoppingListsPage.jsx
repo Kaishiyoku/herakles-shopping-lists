@@ -18,6 +18,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import formatNumberExceeds from '../../../core/formatNumberExceeds';
 import ShoppingListNumberAvatar from './ShoppingListNumberAvatar';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 
 class ShoppingListsPage extends React.PureComponent {
     state = {
@@ -34,39 +36,51 @@ class ShoppingListsPage extends React.PureComponent {
     }
 
     renderShoppingLists() {
-        if (this.state.isLoading) {
-            return range(0, 5).map((i) => <ListItem key={i} animation="wave"><Skeleton animation="wave" width="100%"/></ListItem>);
+        const {isLoading, shoppingLists} = this.state;
+
+        if (isLoading) {
+            return range(0, 5).map((i) => <Box mb={1} key={i}><Skeleton animation="wave" width="100%"/></Box>);
         }
 
-        return this.state.shoppingLists.map(({name, id, shopping_list_entries: shoppingListEntries}, i) => (
-            <div key={slugify(`${name}-${id}`)}>
-                <ListItem button component={Link} to={`/shopping_lists/${id}`}>
-                    <ListItemAvatar>
-                        <ShoppingListNumberAvatar>
-                            {formatNumberExceeds(99, length(shoppingListEntries))}
-                        </ShoppingListNumberAvatar>
-                    </ListItemAvatar>
-                    <ListItemText primary={name}/>
-                </ListItem>
-                {i < (length(this.state.shoppingLists) - 1) && <Divider variant="inset"/>}
-            </div>
-        ));
+        if (length(shoppingLists) === 0) {
+            return <Typography variant="h5">{trans('shoppingLists.noShoppingListsYet')}</Typography>;
+        }
+
+        return (
+            <Paper>
+                <List>
+                    {shoppingLists.map(({name, id, shopping_list_entries: shoppingListEntries}, i) => (
+                        <div key={slugify(`${name}-${id}`)}>
+                            <ListItem button component={Link} to={`/shopping_lists/${id}`}>
+                                <ListItemAvatar>
+                                    <ShoppingListNumberAvatar>
+                                        {formatNumberExceeds(99, length(shoppingListEntries))}
+                                    </ShoppingListNumberAvatar>
+                                </ListItemAvatar>
+                                <ListItemText primary={name}/>
+                            </ListItem>
+                            {i < (length(this.state.shoppingLists) - 1) && <Divider variant="inset"/>}
+                        </div>
+                    ))}
+                </List>
+            </Paper>
+        );
     }
 
     render() {
+        const {isLoading} = this.state;
+
         return (
             <>
                 <p>
-                    <Button variant="outlined" color="primary" onClick={() => navigate('/shopping_lists/create')}>
-                        {trans('shoppingLists.create.title')}
-                    </Button>
+                    {isLoading ? <Skeleton animation="wave" width={200} height={40}/> : (
+                        <Button variant="outlined" color="primary" onClick={() => navigate('/shopping_lists/create')}>
+                            {trans('shoppingLists.create.title')}
+                        </Button>
+                    )}
                 </p>
 
-                <Paper>
-                    <List>
-                        {this.renderShoppingLists()}
-                    </List>
-                </Paper>
+                {this.renderShoppingLists()}
             </>
         );
     }

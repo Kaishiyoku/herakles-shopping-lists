@@ -55,6 +55,7 @@ const translations = {
             noEntriesYet: 'Noch keine Einträge vorhanden.',
             sharedWith: 'Geteilt mit',
         },
+        noShoppingListsYet: 'Noch keine Einkaufslisten vorhanden.',
     },
     unauthorizedAccess: {
         description: 'Sie haben keine Berechtigung diese Seite zu sehen.',
