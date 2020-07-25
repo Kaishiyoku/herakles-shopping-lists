@@ -146,6 +146,11 @@ class ShoppingListDetailPage extends React.PureComponent {
             });
     };
 
+    cleanUpFinishedEntries = () => {
+        put(`/shopping_lists/${this.props.id}/clean_up`)
+            .then(() => this.sendRequest(() => this.props.enqueueSnackbar(trans('shoppingLists.details.cleanUpSuccess'))));
+    };
+
     renderEntries() {
         const {data, isLoading} = this.state;
         const {shopping_list_entries: shoppingListEntries} = data;
@@ -229,6 +234,10 @@ class ShoppingListDetailPage extends React.PureComponent {
                         )}
                     </Grid>
                 </Grid>
+
+                <Box mt={1} mb={1}>
+                    <Button variant="outlined" onClick={this.cleanUpFinishedEntries}>{trans('shoppingLists.details.cleanUpFinishedEntries')}</Button>
+                </Box>
 
                 {this.renderSharedWith()}
 

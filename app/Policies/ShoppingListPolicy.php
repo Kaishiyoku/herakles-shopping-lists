@@ -61,6 +61,21 @@ class ShoppingListPolicy
     }
 
     /**
+     * Determine whether the user can clean up finished shopping list entries
+     *
+     * @param \App\Models\User $user
+     * @param \App\Models\ShoppingList $shoppingList
+     */
+    public function cleanUp(User $user, ShoppingList $shoppingList)
+    {
+        return $shoppingList->users
+            ->filter(function (User $shoppingListUser) use ($user) {
+                return $shoppingListUser->id === $user->id;
+            })
+            ->isNotEmpty();
+    }
+
+    /**
      * Determine whether the user can delete the model.
      *
      * @param \App\Models\User $user

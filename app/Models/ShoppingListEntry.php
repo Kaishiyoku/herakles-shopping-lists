@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\ShoppingListEntry
@@ -27,9 +28,16 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string|null $finished_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShoppingListEntry whereFinishedAt($value)
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ShoppingListEntry onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShoppingListEntry whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ShoppingListEntry withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ShoppingListEntry withoutTrashed()
  */
 class ShoppingListEntry extends Model
 {
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *

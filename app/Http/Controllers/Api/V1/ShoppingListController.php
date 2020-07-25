@@ -73,6 +73,24 @@ class ShoppingListController extends Controller
     }
 
     /**
+     * Clean up finished entries
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\ShoppingList  $shoppingList
+     * @return \Illuminate\Http\Response
+     */
+    public function cleanUp(ShoppingList $shoppingList)
+    {
+        $this->authorize('cleanUp', $shoppingList);
+
+        $shoppingList->shoppingListEntries()
+            ->whereNotNull('finished_at')
+            ->delete();
+
+        return response()->json();
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\ShoppingList  $shoppingList

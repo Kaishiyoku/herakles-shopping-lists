@@ -41,7 +41,7 @@ class LoginPage extends React.PureComponent {
 
             this.props.enqueueSnackbar(trans('login.success'));
 
-            navigate('/');
+            navigate('/shopping_lists');
         }).catch((error) => {
             this.props.enqueueSnackbar(trans('login.error'), {variant: 'error'});
         }).finally(() => {

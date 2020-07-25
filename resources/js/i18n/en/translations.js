@@ -51,6 +51,8 @@ const translations = {
             success: 'Shopping list “%{name}” deleted.',
         },
         details: {
+            cleanUpFinishedEntries: 'Clean up',
+            cleanUpSuccess: 'Finished entries cleaned up.',
             deleteShoppingList: 'Delete shopping list',
             noEntriesYet: 'No entries yet.',
             sharedWith: 'Shared with',

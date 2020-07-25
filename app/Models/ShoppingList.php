@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Pivots\ShoppingListUser;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\ShoppingList
@@ -24,9 +25,16 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ShoppingListEntry[] $shoppingListEntries
  * @property-read int|null $shopping_list_entries_count
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ShoppingList onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ShoppingList whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ShoppingList withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ShoppingList withoutTrashed()
  */
 class ShoppingList extends Model
 {
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *

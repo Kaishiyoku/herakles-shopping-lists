@@ -51,6 +51,8 @@ const translations = {
             success: 'Einlaufsliste „%{name}” gelöscht.',
         },
         details: {
+            cleanUpFinishedEntries: 'Aufräumen',
+            cleanUpSuccess: 'Fertige Einträge aufgeräumt.',
             deleteShoppingList: 'Einkaufsliste löschen',
             noEntriesYet: 'Noch keine Einträge vorhanden.',
             sharedWith: 'Geteilt mit',
