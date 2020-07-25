@@ -30,12 +30,13 @@ import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
 import {slugify} from 'transliteration';
 import ListItem from '@material-ui/core/ListItem';
-import {Link} from '@reach/router';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import getUserId from '../../../authorization/getUserId';
 import Box from '@material-ui/core/Box';
+import Checkbox from '@material-ui/core/Checkbox';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import put from '../../../request/put';
 
 const styles = (theme) => ({
     appBar: {
@@ -62,6 +63,7 @@ const styles = (theme) => ({
 class ShoppingListDetailPage extends React.PureComponent {
     static propTypes = {
         data: PropTypes.object.isRequired,
+        dataEntryUpdaterFn: PropTypes.func.isRequired,
         dataLoaderFn: PropTypes.func.isRequired,
         isLoading: PropTypes.bool.isRequired,
     };
@@ -108,6 +110,13 @@ class ShoppingListDetailPage extends React.PureComponent {
         });
     };
 
+    handleShoppingListEntryCheckboxChange = (shoppingListEntry, event) => {
+        put(`/shopping_lists/${this.props.id}/shopping_list_entries/${shoppingListEntry.id}/toggle_finished`)
+            .then((response) => {
+                this.props.dataEntryUpdaterFn(response.data);
+            });
+    };
+
     renderEntries() {
         const {data, isLoading} = this.props;
         const {shopping_list_entries: shoppingListEntries} = data;
@@ -126,9 +135,15 @@ class ShoppingListDetailPage extends React.PureComponent {
                     {shoppingListEntries.map((shoppingListEntry, i) => (
                         <div key={slugify(`${shoppingListEntry.id}}`)}>
                             <ListItem>
+                                <ListItemIcon>
+                                    <Checkbox
+                                        checked={shoppingListEntry.finished_at !== null}
+                                        onChange={(event) => this.handleShoppingListEntryCheckboxChange(shoppingListEntry, event)}
+                                    />
+                                </ListItemIcon>
                                 <ListItemText primary={shoppingListEntry.description}/>
                             </ListItem>
-                            {i < (length(shoppingListEntries) - 1) && <Divider variant="fullWidth"/>}
+                            {i < (length(shoppingListEntries) - 1) && <Divider variant="inset"/>}
                         </div>
                     ))}
                 </List>
@@ -164,7 +179,7 @@ class ShoppingListDetailPage extends React.PureComponent {
                     <Grid item>
                         <Grid container>
                             <Grid item>
-                                {isLoading ? <Skeleton animation="wave" variant="circle" width={45} height={45} className={classes.avatar}/> : <ShoppingListNumberAvatar className={classes.avatar}>{formatNumberExceeds(99, length(shoppingListEntries))}</ShoppingListNumberAvatar>}
+                                {isLoading ? <Skeleton animation="wave" variant="circle" width={45} height={45} className={classes.avatar}/> : <ShoppingListNumberAvatar className={classes.avatar}>{formatNumberExceeds(99, length(shoppingListEntries.filter((shoppingListEntry) => shoppingListEntry.finished_at === null)))}</ShoppingListNumberAvatar>}
                             </Grid>
                             <Grid item>
                                 <Typography variant="h3" gutterBottom>

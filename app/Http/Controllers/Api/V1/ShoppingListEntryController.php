@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Models\ShoppingList;
 use App\Models\ShoppingListEntry;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ShoppingListEntryController extends Controller
@@ -45,6 +46,23 @@ class ShoppingListEntryController extends Controller
     public function update(Request $request, ShoppingList $shoppingList, ShoppingListEntry $shoppingListEntry)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Models\ShoppingList  $shoppingList
+     * @param  \App\Models\ShoppingListEntry  $shoppingListEntry
+     * @return \Illuminate\Http\Response
+     */
+    public function toggleFinished(ShoppingList $shoppingList, ShoppingListEntry $shoppingListEntry)
+    {
+        $this->authorize('update', $shoppingListEntry);
+
+        $shoppingListEntry->finished_at = $shoppingListEntry->finished_at ? null : now();
+        $shoppingListEntry->save();
+
+        return response()->json($shoppingListEntry);
     }
 
     /**

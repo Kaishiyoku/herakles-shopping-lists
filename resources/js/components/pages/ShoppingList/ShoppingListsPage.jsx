@@ -54,7 +54,7 @@ class ShoppingListsPage extends React.PureComponent {
                             <ListItem button component={Link} to={`/shopping_lists/${id}`}>
                                 <ListItemAvatar>
                                     <ShoppingListNumberAvatar>
-                                        {formatNumberExceeds(99, length(shoppingListEntries))}
+                                        {formatNumberExceeds(99, length(shoppingListEntries.filter((shoppingListEntry) => shoppingListEntry.finished_at === null)))}
                                     </ShoppingListNumberAvatar>
                                 </ListItemAvatar>
                                 <ListItemText primary={name}/>

@@ -53,7 +53,11 @@ class ShoppingListEntryPolicy
      */
     public function update(User $user, ShoppingListEntry $shoppingListEntry)
     {
-        //
+        return $shoppingListEntry->shoppingList->users
+            ->filter(function (User $shoppingListUser) use ($user) {
+                return $shoppingListUser->id === $user->id;
+            })
+            ->isNotEmpty();
     }
 
     /**

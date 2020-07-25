@@ -2,7 +2,7 @@ import {is, isNil, mapObjIndexed} from 'ramda';
 
 /* eslint-disable camelcase */
 const rules = {
-    completed_at: 'date',
+    finished_at: 'date',
     created_at: 'date',
     updated_at: 'date',
 };

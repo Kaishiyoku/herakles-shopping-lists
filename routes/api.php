@@ -28,6 +28,7 @@ Route::prefix('v1')->group(function () {
             return response()->json($users);
         });
         Route::resource('shopping_lists', 'Api\V1\ShoppingListController')->except(['create', 'edit']);
+        Route::put('/shopping_lists/{shopping_list}/shopping_list_entries/{shopping_list_entry}/toggle_finished', 'Api\V1\ShoppingListEntryController@toggleFinished');
         Route::resource('shopping_lists.shopping_list_entries', 'Api\V1\ShoppingListEntryController')->only(['store', 'update', 'destroy']);
     });
 

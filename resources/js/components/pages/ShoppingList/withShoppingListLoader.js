@@ -4,6 +4,7 @@ import merge from '../../../core/merge';
 import withErrorCodeRenderer from '../../withErrorCodeRenderer';
 import {compose} from 'ramda';
 import noop from '../../../core/noop';
+import {concat} from 'ramda';
 
 function withShoppingListLoader(WrappedComponent) {
     return class extends React.PureComponent {
@@ -25,21 +26,29 @@ function withShoppingListLoader(WrappedComponent) {
             this.setState((prevState, props) => {
                 return merge(prevState, {isLoading: true});
             }, () => {
-                get(`/shopping_lists/${this.props.id}`).then(({data}) => {
-                    this.setState((prevState, props) => {
-                        return merge(prevState, {data, isLoading: false});
-                    }, callback);
-                }).catch((error) => {
-                    this.setState((prevState, props) => {
-                        return merge(prevState, {errorStatusCode: error.response.status});
-                    }, callback);
-                });
+                this.sendRequest(callback);
             });
+        };
+
+        sendRequest = (callback = noop) => {
+            get(`/shopping_lists/${this.props.id}`).then(({data}) => {
+                this.setState((prevState, props) => {
+                    return merge(prevState, {data, isLoading: false});
+                }, callback);
+            }).catch((error) => {
+                this.setState((prevState, props) => {
+                    return merge(prevState, {errorStatusCode: error.response.status});
+                }, callback);
+            });
+        };
+
+        updateShoppingListEntry = (shoppingListEntry) => {
+            this.sendRequest();
         };
 
         render() {
             const {isLoading, data, errorStatusCode} = this.state;
-            const additionalProps = {data, dataLoaderFn: this.loadData, errorStatusCode, isLoading};
+            const additionalProps = {data, dataEntryUpdaterFn: this.updateShoppingListEntry, dataLoaderFn: this.loadData, errorStatusCode, isLoading};
 
             return <WrappedComponent {...this.props} {...additionalProps}/>;
         }
