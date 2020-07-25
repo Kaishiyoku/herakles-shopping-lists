@@ -7,8 +7,6 @@ import trans from '../../../i18n/trans';
 import destroy from '../../../request/destroy';
 import {navigate} from '../../../core/routerHistory';
 import {withSnackbar} from 'notistack';
-import withShoppingListLoader from './withShoppingListLoader';
-import PropTypes from 'prop-types';
 import DeleteButton from '../../core/DeleteButton';
 import Grid from '@material-ui/core/Grid';
 import formatNumberExceeds from '../../../core/formatNumberExceeds';
@@ -37,6 +35,10 @@ import Box from '@material-ui/core/Box';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import put from '../../../request/put';
+import noop from '../../../core/noop';
+import get from '../../../request/get';
+import withErrorCodeRenderer from '../../withErrorCodeRenderer';
+import classNames from 'classnames';
 
 const styles = (theme) => ({
     appBar: {
@@ -54,6 +56,9 @@ const styles = (theme) => ({
         right: 20,
         top: 'auto',
     },
+    finishedEntry: {
+        opacity: 0.5,
+    },
     title: {
         flex: 1,
         marginLeft: theme.spacing(2),
@@ -61,15 +66,15 @@ const styles = (theme) => ({
 });
 
 class ShoppingListDetailPage extends React.PureComponent {
-    static propTypes = {
-        data: PropTypes.object.isRequired,
-        dataEntryUpdaterFn: PropTypes.func.isRequired,
-        dataLoaderFn: PropTypes.func.isRequired,
-        isLoading: PropTypes.bool.isRequired,
-    };
-
     state = {
+        data: {
+            // eslint-disable-next-line camelcase
+            shopping_list_entries: [],
+            users: [],
+        },
+        errorStatusCode: null,
         isCreateEntryDialogOpen: false,
+        isLoading: true,
     };
 
     constructor(props, context) {
@@ -78,8 +83,32 @@ class ShoppingListDetailPage extends React.PureComponent {
         this.createEntrySubmitButtonRef = React.createRef();
     }
 
+    componentDidMount() {
+        this.loadData();
+    }
+
+    loadData = (callback = noop) => {
+        this.setState((prevState, props) => {
+            return merge(prevState, {isLoading: true});
+        }, () => {
+            this.sendRequest(callback);
+        });
+    };
+
+    sendRequest = (callback = noop) => {
+        get(`/shopping_lists/${this.props.id}`).then(({data}) => {
+            this.setState((prevState, props) => {
+                return merge(prevState, {data, isLoading: false});
+            }, callback);
+        }).catch((error) => {
+            this.setState((prevState, props) => {
+                return merge(prevState, {errorStatusCode: error.response.status});
+            }, callback);
+        });
+    };
+
     deleteShoppingList = () => {
-        const {id, name} = this.props.data;
+        const {id, name} = this.state.data;
 
         destroy(`/shopping_lists/${id}`).then(() => {
             this.props.enqueueSnackbar(trans('shoppingLists.destroy.success', {name}));
@@ -103,7 +132,7 @@ class ShoppingListDetailPage extends React.PureComponent {
     };
 
     handleCreateEntrySuccess = (callback) => {
-        this.props.dataLoaderFn(() => {
+        this.loadData(() => {
             this.setState((prevState, props) => {
                 return merge(prevState, {isCreateEntryDialogOpen: false});
             }, callback);
@@ -113,12 +142,12 @@ class ShoppingListDetailPage extends React.PureComponent {
     handleShoppingListEntryCheckboxChange = (shoppingListEntry, event) => {
         put(`/shopping_lists/${this.props.id}/shopping_list_entries/${shoppingListEntry.id}/toggle_finished`)
             .then((response) => {
-                this.props.dataEntryUpdaterFn(response.data);
+                this.sendRequest();
             });
     };
 
     renderEntries() {
-        const {data, isLoading} = this.props;
+        const {data, isLoading} = this.state;
         const {shopping_list_entries: shoppingListEntries} = data;
 
         if (isLoading) {
@@ -131,10 +160,10 @@ class ShoppingListDetailPage extends React.PureComponent {
 
         return (
             <Paper>
-                <List>
+                <List component="div">
                     {shoppingListEntries.map((shoppingListEntry, i) => (
-                        <div key={slugify(`${shoppingListEntry.id}}`)}>
-                            <ListItem>
+                        <div key={slugify(`${shoppingListEntry.id}`)} className={classNames({[this.props.classes.finishedEntry]: shoppingListEntry.finished_at})}>
+                            <ListItem component="div">
                                 <ListItemIcon>
                                     <Checkbox
                                         checked={shoppingListEntry.finished_at !== null}
@@ -152,20 +181,20 @@ class ShoppingListDetailPage extends React.PureComponent {
     }
 
     renderSharedWith() {
-        if (this.props.isLoading) {
+        if (this.state.isLoading) {
             return <p><Skeleton animation="wave" width={200}/></p>;
         }
 
         return (
             <p>
-                {trans('shoppingLists.details.sharedWith')}: {this.props.data.users.filter(({id}) => id !== getUserId()).map(({name}) => name).join(', ')}
+                {trans('shoppingLists.details.sharedWith')}: {this.state.data.users.filter(({id}) => id !== getUserId()).map(({name}) => name).join(', ')}
             </p>
         );
     }
 
     render() {
-        const {isLoading, data, classes} = this.props;
-        const {isCreateEntryDialogOpen} = this.state;
+        const {classes} = this.props;
+        const {data, isLoading, isCreateEntryDialogOpen} = this.state;
         const {name, shopping_list_entries: shoppingListEntries, users} = data;
 
         return (
@@ -222,7 +251,7 @@ class ShoppingListDetailPage extends React.PureComponent {
 
                     <ShoppingListEntryCreatePage
                         handleSuccess={this.handleCreateEntrySuccess}
-                        shoppingListId={this.props.data.id}
+                        shoppingListId={this.state.data.id}
                         submitButtonRef={this.createEntrySubmitButtonRef}
                     />
                 </Dialog>
@@ -235,4 +264,4 @@ class ShoppingListDetailPage extends React.PureComponent {
     }
 }
 
-export default withStyles(styles)(withSnackbar(withFade(withShoppingListLoader(ShoppingListDetailPage))));
+export default withStyles(styles)(withErrorCodeRenderer(withSnackbar(withFade(ShoppingListDetailPage))));
