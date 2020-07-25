@@ -61,8 +61,9 @@ class ShoppingListEntryController extends Controller
 
         $shoppingListEntry->finished_at = $shoppingListEntry->finished_at ? null : now();
         $shoppingListEntry->save();
+        $shoppingList->touch();
 
-        return response()->json($shoppingListEntry);
+        return response()->json(ShoppingList::find($shoppingList->id));
     }
 
     /**

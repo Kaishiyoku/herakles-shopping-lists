@@ -37,8 +37,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import put from '../../../request/put';
 import noop from '../../../core/noop';
 import get from '../../../request/get';
-import withErrorCodeRenderer from '../../withErrorCodeRenderer';
 import classNames from 'classnames';
+import ErrorCodeRenderer from '../../ErrorCodeRenderer';
 
 const styles = (theme) => ({
     appBar: {
@@ -141,8 +141,10 @@ class ShoppingListDetailPage extends React.PureComponent {
 
     handleShoppingListEntryCheckboxChange = (shoppingListEntry, event) => {
         put(`/shopping_lists/${this.props.id}/shopping_list_entries/${shoppingListEntry.id}/toggle_finished`)
-            .then((response) => {
-                this.sendRequest();
+            .then(({data}) => {
+                this.setState((prevState, props) => {
+                    return merge(prevState, {data});
+                });
             });
     };
 
@@ -190,20 +192,26 @@ class ShoppingListDetailPage extends React.PureComponent {
             return <p><Skeleton animation="wave" width={200}/></p>;
         }
 
+        const sharedWithUsers = this.state.data.users.filter(({id}) => id !== getUserId());
+
+        if (length(sharedWithUsers) === 0) {
+            return null;
+        }
+
         return (
             <p>
-                {trans('shoppingLists.details.sharedWith')}: {this.state.data.users.filter(({id}) => id !== getUserId()).map(({name}) => name).join(', ')}
+                {trans('shoppingLists.details.sharedWith')}: {sharedWithUsers.map(({name}) => name).join(', ')}
             </p>
         );
     }
 
     render() {
         const {classes} = this.props;
-        const {data, isLoading, isCreateEntryDialogOpen} = this.state;
+        const {data, isLoading, isCreateEntryDialogOpen, errorStatusCode} = this.state;
         const {name, shopping_list_entries: shoppingListEntries, users} = data;
 
         return (
-            <>
+            <ErrorCodeRenderer errorStatusCode={errorStatusCode}>
                 <Grid
                     container
                     direction="row"
@@ -224,20 +232,33 @@ class ShoppingListDetailPage extends React.PureComponent {
                     </Grid>
 
                     <Grid item>
-                        {isLoading ? <Skeleton animation="wave" width={200} height={40}/> : (
-                            <AlertDialog
-                                buttonTitle="Delete shopping list"
-                                buttonComponent={<DeleteButton variant="outlined">{trans('shoppingLists.details.deleteShoppingList')}</DeleteButton>}
-                                description={trans('shoppingLists.destroy.confirmation.description', {name})}
-                                onConfirm={this.deleteShoppingList}
-                            />
-                        )}
+                        <Grid container spacing={1}>
+                            <Grid item>
+                                {isLoading ? <Skeleton animation="wave" width={150} height={40}/> : (
+                                    <Button
+                                        variant="outlined"
+                                        onClick={this.cleanUpFinishedEntries}
+                                        disabled={length(shoppingListEntries.filter((item) => item.finished_at !== null)) === 0}
+                                    >
+                                        {trans('shoppingLists.details.cleanUpFinishedEntries')}
+                                    </Button>
+                                )}
+                            </Grid>
+
+                            <Grid item>
+                                {isLoading ? <Skeleton animation="wave" width={200} height={40}/> : (
+                                    <AlertDialog
+                                        buttonTitle="Delete shopping list"
+                                        buttonComponent={<DeleteButton variant="outlined">{trans('shoppingLists.details.deleteShoppingList')}</DeleteButton>}
+                                        description={trans('shoppingLists.destroy.confirmation.description', {name})}
+                                        onConfirm={this.deleteShoppingList}
+                                    />
+                                )}
+
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
-
-                <Box mt={1} mb={1}>
-                    <Button variant="outlined" onClick={this.cleanUpFinishedEntries}>{trans('shoppingLists.details.cleanUpFinishedEntries')}</Button>
-                </Box>
 
                 {this.renderSharedWith()}
 
@@ -268,9 +289,9 @@ class ShoppingListDetailPage extends React.PureComponent {
                 <Fab color="primary" aria-label="add" className={classes.fab} onClick={this.handleOpenCreateEntryDialog}>
                     <AddIcon/>
                 </Fab>
-            </>
+            </ErrorCodeRenderer>
         );
     }
 }
 
-export default withStyles(styles)(withErrorCodeRenderer(withSnackbar(withFade(ShoppingListDetailPage))));
+export default withStyles(styles)(withSnackbar(withFade(ShoppingListDetailPage)));

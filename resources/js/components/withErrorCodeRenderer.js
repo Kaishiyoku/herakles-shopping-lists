@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import UnauthorizedAccessPage from './pages/UnauthorizedAccessPage';
-import NotFoundPage from './pages/NotFoundPage';
-import {prop} from 'ramda';
+import getErrorStatusCodeComponent from '../getErrorStatusCodeComponent';
 
 function withErrorCodeRenderer(WrappedComponent) {
     return class extends React.PureComponent {
@@ -11,14 +9,7 @@ function withErrorCodeRenderer(WrappedComponent) {
         };
 
         render() {
-            const {errorStatusCode} = this.props;
-
-            const renderComponents = {
-                [403]: UnauthorizedAccessPage,
-                [404]: NotFoundPage,
-            };
-
-            const Component = prop(errorStatusCode, renderComponents) || WrappedComponent;
+            const Component = getErrorStatusCodeComponent(this.props.errorStatusCode) || WrappedComponent;
 
             return <Component {...this.props}/>;
         }
