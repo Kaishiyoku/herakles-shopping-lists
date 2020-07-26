@@ -63,7 +63,7 @@ class ShoppingListEntryController extends Controller
         $shoppingListEntry->save();
         $shoppingList->touch();
 
-        return response()->json(ShoppingList::find($shoppingList->id));
+        return response()->json(formatDefaultShoppingListName(ShoppingList::find($shoppingList->id)));
     }
 
     /**
