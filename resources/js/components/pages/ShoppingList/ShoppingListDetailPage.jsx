@@ -39,6 +39,7 @@ import noop from '../../../core/noop';
 import get from '../../../request/get';
 import classNames from 'classnames';
 import ErrorCodeRenderer from '../../ErrorCodeRenderer';
+import {grey} from '@material-ui/core/colors';
 
 const styles = (theme) => ({
     appBar: {
@@ -57,7 +58,7 @@ const styles = (theme) => ({
         top: 'auto',
     },
     finishedEntry: {
-        opacity: 0.5,
+        color: grey[600],
     },
     title: {
         flex: 1,
