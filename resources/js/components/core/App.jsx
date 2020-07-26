@@ -2,7 +2,6 @@ import React from 'react';
 import {LocationProvider} from '@reach/router';
 import {history} from '../../core/routerHistory';
 import MainLayout from './MainLayout';
-import getNavItems from '../../core/navigation/getNavItems';
 
 class App extends React.Component {
     state = {
@@ -20,11 +19,9 @@ class App extends React.Component {
     }
 
     render() {
-        const {classes} = this.props;
-
         return (
             <LocationProvider history={history}>
-                <MainLayout navItems={getNavItems()}/>
+                <MainLayout/>
             </LocationProvider>
         );
     }
