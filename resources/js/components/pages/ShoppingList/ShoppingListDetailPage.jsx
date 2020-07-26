@@ -163,28 +163,30 @@ class ShoppingListDetailPage extends React.PureComponent {
         }
 
         if (length(shoppingListEntries) === 0) {
-            return <Typography variant="h5">{trans('shoppingLists.details.noEntriesYet')}</Typography>;
+            return <Box mt={5}><Typography variant="h5">{trans('shoppingLists.details.noEntriesYet')}</Typography></Box>;
         }
 
         return (
-            <Paper>
-                <List component="div">
-                    {shoppingListEntries.map((shoppingListEntry, i) => (
-                        <div key={slugify(`${shoppingListEntry.id}`)} className={classNames({[this.props.classes.finishedEntry]: shoppingListEntry.finished_at})}>
-                            <ListItem component="div">
-                                <ListItemIcon>
-                                    <Checkbox
-                                        checked={shoppingListEntry.finished_at !== null}
-                                        onChange={(event) => this.handleShoppingListEntryCheckboxChange(shoppingListEntry, event)}
-                                    />
-                                </ListItemIcon>
-                                <ListItemText primary={shoppingListEntry.description}/>
-                            </ListItem>
-                            {i < (length(shoppingListEntries) - 1) && <Divider variant="inset"/>}
-                        </div>
-                    ))}
-                </List>
-            </Paper>
+            <Box mt={2}>
+                <Paper>
+                    <List component="div">
+                        {shoppingListEntries.map((shoppingListEntry, i) => (
+                            <div key={slugify(`${shoppingListEntry.id}`)} className={classNames({[this.props.classes.finishedEntry]: shoppingListEntry.finished_at})}>
+                                <ListItem component="div">
+                                    <ListItemIcon>
+                                        <Checkbox
+                                            checked={shoppingListEntry.finished_at !== null}
+                                            onChange={(event) => this.handleShoppingListEntryCheckboxChange(shoppingListEntry, event)}
+                                        />
+                                    </ListItemIcon>
+                                    <ListItemText primary={shoppingListEntry.description}/>
+                                </ListItem>
+                                {i < (length(shoppingListEntries) - 1) && <Divider variant="inset"/>}
+                            </div>
+                        ))}
+                    </List>
+                </Paper>
+            </Box>
         );
     }
 
