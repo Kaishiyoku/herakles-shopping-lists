@@ -13,14 +13,7 @@ import formatNumberExceeds from '../../../core/formatNumberExceeds';
 import {length, range} from 'ramda';
 import ShoppingListNumberAvatar from './ShoppingListNumberAvatar';
 import {withStyles} from '@material-ui/core';
-import ShoppingListEntryCreatePage from './ShoppingListEntryCreatePage';
-import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-import CloseIcon from '@material-ui/icons/Close';
-import FullscreenDialogTransition from '../../core/FullscreenDialogTransition';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import merge from '../../../core/merge';
@@ -38,13 +31,11 @@ import put from '../../../request/put';
 import noop from '../../../core/noop';
 import get from '../../../request/get';
 import classNames from 'classnames';
-import ErrorCodeRenderer from '../../ErrorCodeRenderer';
 import {grey} from '@material-ui/core/colors';
+import {Link} from '@reach/router';
+import ErrorCodeRenderer from '../../ErrorCodeRenderer';
 
 const styles = (theme) => ({
-    appBar: {
-        position: 'relative',
-    },
     avatar: {
         marginRight: '10px',
         marginTop: '8px',
@@ -60,10 +51,6 @@ const styles = (theme) => ({
     finishedEntry: {
         color: grey[600],
     },
-    title: {
-        flex: 1,
-        marginLeft: theme.spacing(2),
-    },
 });
 
 class ShoppingListDetailPage extends React.PureComponent {
@@ -74,15 +61,8 @@ class ShoppingListDetailPage extends React.PureComponent {
             users: [],
         },
         errorStatusCode: null,
-        isCreateEntryDialogOpen: false,
         isLoading: true,
     };
-
-    constructor(props, context) {
-        super(props, context);
-
-        this.createEntrySubmitButtonRef = React.createRef();
-    }
 
     componentDidMount() {
         this.loadData();
@@ -115,28 +95,6 @@ class ShoppingListDetailPage extends React.PureComponent {
             this.props.enqueueSnackbar(trans('shoppingLists.destroy.success', {name}));
 
             navigate('/shopping_lists');
-        });
-    };
-
-    handleOpenCreateEntryDialog = () => {
-        this.toggleIsCreateEntryDialogOpen(true);
-    };
-
-    handleCloseCreateEntryDialog = () => {
-        this.toggleIsCreateEntryDialogOpen(false);
-    };
-
-    toggleIsCreateEntryDialogOpen = (isCreateEntryDialogOpen) => {
-        this.setState((prevState, props) => {
-            return merge(prevState, {isCreateEntryDialogOpen});
-        });
-    };
-
-    handleCreateEntrySuccess = (callback) => {
-        this.loadData(() => {
-            this.setState((prevState, props) => {
-                return merge(prevState, {isCreateEntryDialogOpen: false});
-            }, callback);
         });
     };
 
@@ -210,7 +168,7 @@ class ShoppingListDetailPage extends React.PureComponent {
 
     render() {
         const {classes} = this.props;
-        const {data, isLoading, isCreateEntryDialogOpen, errorStatusCode} = this.state;
+        const {data, isLoading, errorStatusCode} = this.state;
         const {name, shopping_list_entries: shoppingListEntries, users} = data;
 
         return (
@@ -257,7 +215,6 @@ class ShoppingListDetailPage extends React.PureComponent {
                                         onConfirm={this.deleteShoppingList}
                                     />
                                 )}
-
                             </Grid>
                         </Grid>
                     </Grid>
@@ -267,29 +224,7 @@ class ShoppingListDetailPage extends React.PureComponent {
 
                 {this.renderEntries()}
 
-                <Dialog fullScreen open={isCreateEntryDialogOpen} onClose={this.handleCloseCreateEntryDialog} TransitionComponent={FullscreenDialogTransition}>
-                    <AppBar className={classes.appBar}>
-                        <Toolbar>
-                            <IconButton edge="start" color="inherit" onClick={this.handleCloseCreateEntryDialog} aria-label="close">
-                                <CloseIcon/>
-                            </IconButton>
-                            <Typography variant="h6" className={classes.title}>
-                                {trans('shoppingLists.createEntry.title')}
-                            </Typography>
-                            <Button ref={this.createEntrySubmitButtonRef} autoFocus color="inherit" onClick={() => document.getElementById('entryCreateForm').dispatchEvent(new Event('submit', {cancelable: true}))}>
-                                {trans('common.create')}
-                            </Button>
-                        </Toolbar>
-                    </AppBar>
-
-                    <ShoppingListEntryCreatePage
-                        handleSuccess={this.handleCreateEntrySuccess}
-                        shoppingListId={this.state.data.id}
-                        submitButtonRef={this.createEntrySubmitButtonRef}
-                    />
-                </Dialog>
-
-                <Fab color="primary" aria-label="add" className={classes.fab} onClick={this.handleOpenCreateEntryDialog}>
+                <Fab color="primary" aria-label="add" className={classes.fab} component={Link} to={`/shopping_lists/${this.props.id}/create`}>
                     <AddIcon/>
                 </Fab>
             </ErrorCodeRenderer>
