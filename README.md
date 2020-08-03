@@ -15,7 +15,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Herakles Shopping Lists Screen Shot][product-screenshot]](https://i.imgur.com/E6jSDe2.png)
+![Herakles Shopping Lists Screenshot](https://i.imgur.com/E6jSDe2.png "Herakles Shopping Lists Screenshot")
 
 This project basically is a demo-project to test out new development patterns; thus the real-world usage may be low.
 
